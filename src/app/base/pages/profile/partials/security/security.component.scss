@@ -1,0 +1,14 @@
+.btn {
+  @apply border-none cursor-pointer text-white px-4 md:px-6 py-[6px] md:py-[10px] 
+    rounded-md flex items-center justify-center text-center 
+    shadow-[0_4px_0px_0px_#8B0000] 
+    transition-all duration-200;
+  background-color: #ce0000;
+}
+
+
+.qrcode-bg{
+    border-radius: 4px;
+border: 1px solid rgba(43, 46, 54, 0.60);
+background: rgba(14, 16, 21, 0.60);
+}

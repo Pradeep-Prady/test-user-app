@@ -1,0 +1,115 @@
+.promotional-banner-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: width, transform;
+}
+
+swiper-container {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+swiper-slide {
+  text-align: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Slide content */
+.promotional-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Navigation buttons */
+.custom-prev,
+.custom-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s;
+  
+  &:active {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-50%) scale(0.95);
+  }
+}
+
+.custom-prev {
+  left: 10px;
+}
+
+.custom-next {
+  right: 10px;
+}
+
+.custom-prev:hover,
+.custom-next:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.custom-bullet {
+  height: 5px;
+  background-color: #2b2e36;
+  opacity: 0.4;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 10px; /* Smaller inactive */
+  
+  &.active {
+    background-color: #ce0000;
+    opacity: 1;
+    width: 36px; /* Full width on active */
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-bullet.active {
+    width: 25px;
+  }
+
+  .custom-bullet {
+    width: 6px;
+  }
+}

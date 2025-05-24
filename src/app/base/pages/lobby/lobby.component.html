@@ -1,0 +1,130 @@
+<div class="w-full p-5 md:p-5 xl:px-5 flex flex-col gap-4">
+  <div class="bg-[#22252b h-[380px overflow- w-full ">
+    <app-promotional-banner></app-promotional-banner>
+  </div>
+
+  <div>
+    <app-lotto60-originals></app-lotto60-originals>
+  </div>
+
+  <div class="flex w-full items-center gap-2 md:gap-4">
+    <div
+      class="w-full flex gap-2 md:gap-4 bg-[#22252b] px-4 py-1.5 rounded-md items-center"
+      [ngClass]="{ searchActive: isSearchFocused }"
+      (focusin)="isSearchFocused = true"
+      (focusout)="isSearchFocused = false"
+    >
+      <div class="flex items-center justify-center">
+        <i
+          class="fa-solid fa-magnifying-glass text-white text-sm md:text-lg"
+        ></i>
+      </div>
+      <input
+        type="text"
+        placeholder="Search"
+        autocomplete="false"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        [(ngModel)]="searchTerm"
+        (keydown.enter)="onSearch()"
+        class="w-full h-9 md:h-10 text-sm md:text-base border-none outline-none bg-transparent text-white placeholder:text-white"
+      />
+
+      <div
+        class=" flex cursor-pointer text-[18px]  text-[#FFFFFF99] hover:text-[#ffffff] {{
+          searchTerm !== '' ? 'block' : 'hidden'
+        }}"
+        (click)="clearSearch()"
+      >
+        <i class="fa-solid fa-circle-xmark"></i>
+      </div>
+    </div>
+
+    <div
+      (click)="onSearch()"
+      class="w-[80px] sm:w-[100px] md:w-[120px] lg:w-[150px] text-center providerBt bg-[#CE0000] justify-center h-full shrink-0 text-sm md:text-base cursor-pointer text-white flex gap-2 px-[8px] md:px-[12px] py-[12px] md:py-[14px] rounded-md items-center"
+    >
+      <p class="font-semibold">Search</p>
+    </div>
+  </div>
+
+  <div
+    class="bg-[#292E3866] rounded-md flex items-center px-2 md:px-4 py-3 overflow-x-scroll myScrollHidden gap-4 md:gap-7"
+    #scrollContainer
+  >
+    <div
+      class="flex items-center shrink-0 text-sm md:text-base gap-2 sideBarCategoryItemBtn cursor-pointer"
+      [ngClass]="{
+        sideBarBtnCategoryItemActive: isLobby
+      }"
+      (click)="isLobby = true; selectedCategory = ''"
+    >
+      <i class="fa-solid fa-cubes-stacked"></i>
+      <p>Lobby</p>
+    </div>
+    <div
+      class="text-white shrink-0 relative"
+      *ngFor="let category of categories"
+    >
+      <div
+        class="flex items-center text-sm md:text-base gap-2 sideBarCategoryItemBtn cursor-pointer"
+        [ngClass]="{
+          sideBarBtnCategoryItemActive: selectedCategory === category.title
+        }"
+        (click)="onCategorySelect(category.title)"
+      >
+        <i [class]="category.icon"></i>
+        <p>{{ category.title }}</p>
+      </div>
+    </div>
+  </div>
+
+  <app-grid-cards
+    *ngIf="searchResultGames?.games_length > 0 && !isLobby"
+    title="{{ selectedCategory === '' ? 'All Games' : selectedCategory }}"
+    [items]="searchResultGames.games"
+  ></app-grid-cards>
+
+  <div *ngIf="isLobby">
+    <div *ngIf="searchTerm === ''">
+      <app-grid-cards
+        title="Recommended Games"
+        [items]="featuredGames.slice(4, 24)"
+      ></app-grid-cards>
+
+      <app-grid-cards
+        title="Popular Games"
+        [items]="featuredGames.reverse().slice(4, 24)"
+      ></app-grid-cards>
+
+      <app-grid-cards
+        title="Trending Casino"
+        [items]="featuredGames.slice(2, 22)"
+      ></app-grid-cards>
+
+      <app-grid-cards
+        title="New Releases"
+        [items]="featuredGames.slice(6, 22)"
+      ></app-grid-cards>
+    </div>
+    <app-grid-cards
+      *ngIf="searchResultGames?.games_length > 0 && searchTerm !== ''"
+      title="Search Results"
+      [items]="searchResultGames.games"
+    ></app-grid-cards>
+  </div>
+
+  <div
+  class="w-full items-start gap-[10px] mt-5 overflow-y-auto h-auto max-h-full md:h-[400px] md:max-h-[400px] auto-rows-min"
+  *ngIf="searchResultGames?.games_length === 0"
+>
+  <app-noresults></app-noresults>
+</div>
+
+  <app-currency></app-currency>
+
+  <app-round-winnings></app-round-winnings>
+
+  <app-providers-scroll></app-providers-scroll>
+</div>

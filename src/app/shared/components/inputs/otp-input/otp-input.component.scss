@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.otp-input:focus {
+  border: 2px solid transparent !important;
+  background: linear-gradient(#2b2e36, #2b2e36) padding-box,
+    linear-gradient(90deg, #982929 0%, #d3a2a2 60%) border-box !important;
+  outline: none;
+}

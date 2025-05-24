@@ -1,0 +1,27 @@
+.open-left-modal-transition {
+  animation: roadRunnerIn 0.5s ease-in-out;
+}
+
+.close-left-modal-transition {
+  animation: roadRunnerOut 0.5s ease-in-out;
+}
+
+@keyframes roadRunnerIn {
+  from {
+    transform: translateX(-1500px);
+  }
+
+  to {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes roadRunnerOut {
+  from {
+    transform: translateX(0px);
+  }
+
+  to {
+    transform: translateX(-1500px);
+  }
+}

@@ -1,0 +1,59 @@
+:host {
+  display: block;
+  overflow: hidden !important;
+}
+
+.toast-content {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden !important;
+}
+
+.toast-container {
+  z-index: 999999 !important;
+  position: fixed !important;
+  top: 40px;
+  right: 20px;
+  width: auto;
+  pointer-events: auto;
+  max-width: calc(100vw - 40px);
+  transform: none;
+  overflow: hidden !important;
+  box-sizing: border-box;
+}
+
+.toast-message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hide scrollbars for all elements */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+* {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .toast-container {
+    right: 5% !important;
+    width: 90%;
+    max-width: 90vw;
+  }
+}
+
+.success {
+  background: linear-gradient(90deg, #2b2e36 0%, #337036 152.88%);
+  color: white;
+}
+
+.error {
+  background: linear-gradient(90deg, #2b2e36 0%, #ce0000 100.88%);
+  color: white;
+}

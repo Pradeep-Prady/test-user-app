@@ -1,0 +1,75 @@
+.rightGradient {
+  background: linear-gradient(180deg, #ce0000 0%, #525e7b 100%);
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #fff;
+  position: relative;
+
+  input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    padding: 0;
+  }
+
+  input[type="checkbox"]::after {
+    content: "\f00c";
+    font-family: "Font Awesome 6 Free"; /* Or "Font Awesome 5 Free" if using older version */
+    font-weight: 900; /* Use 900 for solid icons */
+    color: #0e1015;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    pointer-events: none;
+  }
+
+  /* ✅ Checked state: solid gradient background */
+  input[type="checkbox"]:checked {
+    background: linear-gradient(90deg, #7c1414 -3.12%, #d19d9d 100%);
+    border: none;
+  }
+
+  input[type="checkbox"]:checked::after {
+    display: block;
+  }
+
+  /* ✅ Hover (only when NOT checked): gradient border effect */
+  input[type="checkbox"]:not(:checked):hover {
+    border: 2px solid transparent;
+    background-image: linear-gradient(#121212, #121212),
+      /* background fill */ linear-gradient(90deg, #7c1414 -3.12%, #d19d9d 100%); /* border */
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+
+  label {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  &.error input[type="checkbox"] {
+    border-color: #e74c3c;
+  }
+
+  &.error label {
+    color: #e74c3c;
+  }
+
+  &.checked.error label {
+    color: #fff;
+    font-weight: bold;
+  }
+}

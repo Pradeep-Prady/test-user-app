@@ -1,0 +1,122 @@
+<div class="bg-[#14171D] p-3 sm:p-4 md:p-5 m-3 sm:m-4 md:m-5">
+  <div
+    class="w-full flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0"
+  >
+    <div class="w-full flex items-start justify-between gap-3">
+      <div class="w-full flex flex-col items-start gap-3">
+        <img
+          class="h-[30px] sm:h-[35px] md:h-[40px]"
+          src="/assets/images/logos/lotto60.svg"
+          alt="lotto60"
+        />
+        <p class="text-[#FFFFFFB2] text-xs sm:text-sm text-left">
+          Lotto60.com Copyright© 2022-2024. All rights reserved
+        </p>
+      </div>
+      <div
+        class="relative w-auto flex md:hidden justify-center sm:justify-start"
+      >
+        <div
+          (click)="showLanguageModel()"
+          (keydown.enter)="showLanguageModel()"
+          (keydown.space)="showLanguageModel(); $event.preventDefault()"
+          class="border-2 cursor-pointer border-[#2B2E36] bg-[#2B2E36] text-white px-3 py-1.5 rounded-md gap-2 flex items-center justify-center text-center text-sm sm:text-base"
+        >
+          <div>
+            <i class="fa-solid fa-globe"></i>
+          </div>
+          <p class="">{{ currentLanguage.name }}</p>
+          <div>
+            <i class="fa-solid fa-caret-down"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <img
+        class="w-full max-w-[500px] md:w-[400px] md:max-w-[600px]"
+        src="/assets/images/footer/footer-brands.svg"
+        alt="lotto60"
+      />
+    </div>
+  </div>
+
+  <div
+    class="w-full grid grid-cols-2 md:flex text-white my-5 sm:my-6 md:my-7 items-center justify-center sm:justify-between gap-3 sm:gap-2"
+  >
+    <p class="text-sm sm:text-base font-averta-semibold">About Us</p>
+    <p class="text-sm sm:text-base font-averta-semibold">Mega Jackpot®Game</p>
+    <p class="text-sm sm:text-base font-averta-semibold">
+      Instant Jackpot®Game
+    </p>
+    <p class="text-sm sm:text-base font-averta-semibold">Lotto60®Game Rules</p>
+    <p class="text-sm sm:text-base font-averta-semibold">
+      Frequently Asked Questions
+    </p>
+    <p class="text-sm sm:text-base font-averta-semibold">Terms of Use</p>
+    <div
+      class="relative w-full sm:w-auto hidden md:flex justify-center sm:justify-start"
+    >
+      <div
+        (click)="showLanguageModel()"
+        (keydown.enter)="showLanguageModel()"
+        (keydown.space)="showLanguageModel(); $event.preventDefault()"
+        class="border-2 cursor-pointer border-[#2B2E36] bg-[#2B2E36] text-white px-3 py-1.5 rounded-md gap-2 flex items-center justify-center text-center text-sm sm:text-base"
+      >
+        <div>
+          <i class="fa-solid fa-globe"></i>
+        </div>
+        <p class="">{{ currentLanguage.name }}</p>
+        <div>
+          <i class="fa-solid fa-caret-down"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="w-full flex flex-col md:flex-row items-start justify-between gap-6 md:gap-4"
+  >
+    <div class="w-full md:w-8/12 text-[#FFFFFFB2] flex flex-col gap-3">
+      <img
+        class="h-auto w-[35px] sm:w-[40px] md:w-[45px]"
+        src="/assets/images/footer/footer-cancel.png"
+        alt="lotto60"
+      />
+      <p class="text-sm sm:text-base">
+        Lotto60® is fully licensed and regulated to provide all of our lottery
+        and other games by the Anjouan Gaming Board. Current licence issued 26
+        June 2024, Lemonia International Ltd (Sri Lanka).
+      </p>
+      <p class="text-sm sm:text-base">
+        Payments are processed by Lemonia EU Payments SRL, Romania (European
+        Union). It is the player's sole responsibility to enquire about the
+        applicable laws and regulations for online gaming in their own
+        jurisdiction.
+      </p>
+      <p class="text-sm sm:text-base">Contact: service&#64;lotto60.com.</p>
+    </div>
+    <div class="w-full md:w-auto flex flex-col gap-3">
+      <p class="text-white font-medium md:text-left">Join our Community</p>
+      <div
+        class="text-white text-[20px] sm:text-[26px] flex items-center gap-5"
+      >
+        <i class="fa-brands fa-linkedin"></i>
+        <i class="fa-brands fa-square-instagram"></i>
+        <i class="fa-brands fa-square-facebook"></i>
+        <i class="fa-brands fa-youtube"></i>
+        <i class="fa-brands fa-x-twitter"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Language Selector Modal -->
+<div
+  *ngIf="showLanguageSelector"
+  class="fixed inset-0 modelOverlay bg-opacity-30 flex items-center justify-center z-50"
+>
+  <app-language-select
+    (closeModal)="showLanguageSelector = false"
+  ></app-language-select>
+</div>

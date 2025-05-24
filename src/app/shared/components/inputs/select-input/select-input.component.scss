@@ -1,0 +1,69 @@
+.inputBorder {
+    position: relative;
+    border-radius: 8px;
+  }
+  
+  .inputBorder::before {
+    content: "";
+    position: absolute;
+    inset: -1px; /* Negative value to position outside the input */
+    border-radius: 8px;
+    background: linear-gradient(90deg, #982929 0%, #d3a2a2 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .inputBorder:focus-within::before,
+  .inputBorder:hover::before {
+    opacity: 1;
+  }
+  
+  
+  .select-field {
+    color: white;
+    user-select: none;
+  }
+  
+  .chevron-icon {
+    transition: transform 0.2s ease;
+    
+    &.rotated {
+      transform: rotate(180deg);
+    }
+  }
+  
+  .dropdown-menu {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    max-height: 200px;
+    overflow-y: auto;
+    
+    /* Scrollbar styles */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: #1A1D24;
+      border-radius: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: #1A1D24;
+      border-radius: 4px;
+    }
+  }
+  
+  .dropdown-item {
+    transition: background-color 0.15s ease;
+    
+    &:first-child {
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+    
+    &:last-child {
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+  }

@@ -1,0 +1,229 @@
+<div
+  *ngIf="showLoginModal"
+  class="fixed inset-0 z-[10000] flex items-center justify-center"
+>
+  <div
+    class="modelOverlay"
+    (click)="close()"
+    (keydown.enter)="close()"
+    tabindex="0"
+    role="button"
+    aria-label="Close modal"
+  ></div>
+
+  <!-- Login -->
+  <div
+    *ngIf="currentPage === 'login' && isEmailVerified"
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full h-full md:h-auto md:max-w-3xl mx-4 z-10"
+    [ngClass]="{ 'animate-modal': showLoginModal }"
+  >
+    <div class="w-full grid md:grid-cols-2">
+      <div class="rightGradient text-white hidden md:flex flex-col gap-5 p-5">
+        <div>
+          <img
+            class="h-[25px]"
+            src="/assets/images/logos/lotto60White.svg"
+            alt="logo"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <h2 class="text-2xl font-averta-semibold">Welcome to Lotto60</h2>
+          <div class="text-sm flex flex-col gap-1">
+            <p class="">Signup to win with Lotto60</p>
+            <p>Get up to 300% bonus</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-white p-5">
+        <!-- Login Form Section -->
+        <div>
+          <div class="flex flex-col gap-7">
+            <div class="flex md:hidden justify-between items-center">
+              <div>
+                <img
+                  class="h-[25px]"
+                  src="/assets/images/logos/lotto60.svg"
+                  alt="logo"
+                />
+              </div>
+              <div
+                class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+                (click)="close()"
+                (keydown.enter)="close()"
+                tabindex="0"
+                role="button"
+                aria-label="Close modal"
+              >
+                <i
+                  class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+                ></i>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <h2 class="text-xl font-averta-semibold">Login</h2>
+              <div
+                class="cursor-pointer group border-2 hidden md:flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+                (click)="close()"
+                (keydown.enter)="close()"
+                tabindex="0"
+                role="button"
+                aria-label="Close modal"
+              >
+                <i
+                  class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+                ></i>
+              </div>
+            </div>
+          </div>
+
+          <form (ngSubmit)="login()" class="my-5 flex flex-col gap-5">
+            <app-text-input
+              label="Email ID/Username"
+              placeholder="Email ID / Username"
+              [isError]="emailError !== ''"
+              [errorMessage]="emailError"
+              [type]="'text'"
+              [(ngModel)]="email_or_username"
+              name="email_or_username"
+            ></app-text-input>
+
+            <div class="">
+              <app-password-input
+                label="Password"
+                placeholder="Password"
+                [(ngModel)]="password"
+                name="password"
+                [isError]="passwordError !== ''"
+                [errorMessage]="passwordError"
+              >
+              </app-password-input>
+              <div class="w-full flex justify-end">
+                <p
+                  (click)="forgotPassword()"
+                  (keydown.enter)="forgotPassword()"
+                  tabindex="0"
+                  role="button"
+                  class="text-sm w-auto text-[#FFFFFFCC] hover:text-white cursor-pointer my-2 text-right"
+                >
+                  Forgot Password?
+                </p>
+              </div>
+            </div>
+
+            <button
+              class="w-full bg-[#CE0000] text-center py-[10px] cursor-pointer rounded-[4px] no-scale-on-hover"
+              type="submit"
+            >
+              Login
+            </button>
+
+            <div>
+              <p class="text-sm text-[#FFFFFF99]">
+                Don't have a Lotto60 account?
+                <span
+                  (click)="backToSignup()"
+                  (keydown.enter)="backToSignup()"
+                  tabindex="0"
+                  role="button"
+                  class="text-white cursor-pointer"
+                  >Signup</span
+                >
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="!isEmailVerified"
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full h-full md:h-auto md:max-w-lg mx-4 z-10"
+    [ngClass]="{ 'animate-modal': showLoginModal }"
+  >
+    <div class="text-white p-5">
+      <div class="flex justify-end items-center">
+        <div
+          class="cursor-pointer group border-2 border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+          (click)="close()"
+          (keydown.enter)="close()"
+          tabindex="0"
+          role="button"
+          aria-label="Close modal"
+        >
+          <i
+            class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+          ></i>
+        </div>
+      </div>
+
+      <div class="my-5 flex flex-col gap-3">
+        <div class="w-full flex items-start justify-start">
+          <img
+            src="/assets/images/common/email.svg"
+            alt="logo"
+            class="h-[50px] w-auto"
+          />
+        </div>
+
+        <h2 class="text-xl font-averta-semibold">Verify Your Email Address</h2>
+
+        <div class="text-sm text-[#FFFFFFCC] mb-5">
+          <p>
+            To begin your adventure with Lotto60, please confirm your email
+            address. A verification link will be sent to the email you
+            registered with.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-5">
+          <div
+            class="bg-[#CE0000] text-center py-[10px] cursor-pointer rounded-[4px]"
+            (click)="backToLogin()"
+            (keydown.enter)="backToLogin()"
+            tabindex="0"
+            role="button"
+            aria-label="Back to Login"
+          >
+            <p>Back to Login</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-5">
+          <div class="flex gap-2">
+            <p class="text-[#FFFFFF99]">Haven't received an e-mail?</p>
+            <p
+              class="text-white underline cursor-pointer"
+              (click)="sendVerificationEmail()"
+              (keydown.enter)="sendVerificationEmail()"
+              tabindex="0"
+              role="button"
+              aria-label="Resend Verification Link"
+            >
+              Resend e-mail
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Verification -->
+  <app-email-verification
+    *ngIf="currentPage === 'email-verification'"
+    (closeModal)="close()"
+    (showLoginModal)="showLoginModal.emit()"
+  ></app-email-verification>
+
+  <!-- TFA -->
+  <app-tfa
+    *ngIf="currentPage === 'tfa'"
+    (closeModal)="close()"
+    (showLoginModal)="showLoginModal.emit()"
+    (otpSubmit)="onTfaSubmit($event)"
+    [user]="user"
+  ></app-tfa>
+</div>

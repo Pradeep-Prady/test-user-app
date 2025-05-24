@@ -1,0 +1,58 @@
+<div
+  class="select-container w-full md:w-[150px] bg-[#1C1F25] border-2 rounded-[4px] border-[#FFFFFF33] relative w-full"
+  (clickOutside)="onClickOutside($event)"
+>
+  <!-- Select header/trigger -->
+  <div
+    class="select-header bg-[#1C1F25] rounded-[6px] px-3 py-2 flex justify-between items-center cursor-pointer"
+    (click)="toggleDropdown()"
+  >
+    <span class="text-white">{{ selectedOption?.label || placeholder }}</span>
+
+    <i
+      class="fa-solid fa-chevron-down"
+      [ngClass]="{ 'rotate-180': isDropdownOpen }"
+    ></i>
+  </div>
+
+  <!-- Dropdown menu -->
+  <div
+    class="dropdown-menu absolute top-full left-0 w-full mt-1 rounded-[6px] bg-[#0E1015] shadow-lg z-10 overflow-hidden transition-all duration-300"
+    [ngClass]="{
+      'opacity-100 visible': isDropdownOpen,
+      'opacity-0 invisible': !isDropdownOpen
+    }"
+    *ngIf="isDropdownOpen"
+  >
+    <div class="w-full">
+      <div class="text-white p-3">
+        <div class="flex flex-col gap-7">
+          <div
+            class="h-auto flex flex-col overflow-y-scroll myLanguageScrol myScrollHidden gap-1 md:gap-2"
+          >
+            <div
+              class="flex rounded-[4px] px-[10px] py-[4px] md:py-[8px] items-center justify-between cursor-pointer hover:bg-[#2B2E3680] gap-2"
+              [ngClass]="{
+                'bg-[#2B2E3680]': option.value === selectedOption?.value
+              }"
+              *ngFor="let option of filteredOptions"
+              (click)="selectOption(option)"
+            >
+              <p class="text-white">{{ option.label }}</p>
+              <!-- <label
+                class="relative cursor-pointer flex items-center justify-center"
+              >
+                <input
+                  type="radio"
+                  name="optionRadio"
+                  [checked]="isOptionSelected(option)"
+                  class="custom-radio"
+                />
+              </label> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

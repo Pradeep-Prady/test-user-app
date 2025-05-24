@@ -1,0 +1,202 @@
+<div
+  class="w-full flex items-center z-[9999] justify-between lg:justify-end px-5 lg:px-5 py-2 md:py-3 md:px-10 bg-[#0E1015]"
+>
+  <!-- <div
+    class="flex md:hidden justify-start items-center w-full cursor-pointer"
+    role="button"
+    aria-label="Toggle mobile menu"
+  >
+    <img
+      src="./assets/images/lotto60.svg"
+      class="object-contain w-26"
+      alt="logo"
+    />
+  </div> -->
+
+  <!-- (click)="drawer(true)"
+  (keydown.enter)="drawer(true)"
+  (keydown.space)="drawer(true); $event.preventDefault()" -->
+  <a
+    class="flex lg:hidden text-lg mt-0.5 cursor-pointer gap-2 items-center"
+    routerLink="/"
+    tabindex="0"
+    role="button"
+    aria-label="Toggle mobile menu"
+  >
+    <div class="hidden md:block">
+      <i
+        class="fa-regular fa-bars-staggered text-white bg-[#2B2E3699] p-2 rounded-md"
+        tabindex="0"
+        role="button"
+        aria-label="Toggle drawer menu"
+      ></i>
+    </div>
+
+    <div
+      class="flex justify-start items-center w-full cursor-pointer"
+      role="button"
+      aria-label="Toggle mobile menu"
+    >
+      <img
+        src="./assets/images/logos/{{ isLoggedIn ? '60red' : 'lotto60' }}.svg"
+        class="object-contain flex md:hidden h-[26px]"
+        alt="logo"
+      />
+      <img
+        src="./assets/images/logos/lotto60.svg"
+        class="object-contain hidden md:flex w-26"
+        alt="logo"
+      />
+    </div>
+  </a>
+  <div
+    *ngIf="!isLoggedIn; else loggedIn"
+    class="flex items-center gap-2 md:gap-3"
+  >
+    <div
+      (click)="modalService.showLoginModal()"
+      (keydown.enter)="modalService.showLoginModal()"
+      (keydown.space)="modalService.showLoginModal(); $event.preventDefault()"
+      tabindex="0"
+      role="button"
+      aria-label="Login"
+      class="md:border-2 cursor-pointer border-white text-white px-4 md:px-6 py-1.5 rounded-md flex items-center justify-center text-center"
+    >
+      <p class="text-sm lg:text-base font-averta-semibold">Login</p>
+    </div>
+
+    <div
+      class="redBtn bg-[#FF0000] cursor-pointer"
+      (click)="showSignupModal = true"
+      (keydown.enter)="showSignupModal = true"
+      (keydown.space)="showSignupModal = true; $event.preventDefault()"
+      tabindex="0"
+      role="button"
+      aria-label="Signup"
+    >
+      <p class="text-sm lg:text-base font-averta-semibold">Signup</p>
+    </div>
+
+    <div class="relative hidden md:flex">
+      <div
+        (click)="showLanguageModel()"
+        (keydown.enter)="showLanguageModel()"
+        (keydown.space)="showLanguageModel(); $event.preventDefault()"
+        tabindex="0"
+        role="button"
+        aria-label="Toggle language selection"
+        class="border-2 cursor-pointer border-[#2B2E36] bg-[#2B2E36] text-white px-3 py-1.5 rounded-md gap-2 flex items-center justify-center text-center"
+      >
+        <div>
+          <i class="fa-solid fa-globe"></i>
+        </div>
+        <p class="capitalize">{{ currentLanguage.key }}</p>
+        <div>
+          <i class="fa-solid fa-caret-down"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #loggedIn>
+    <div class="flex gap-3">
+      <div class="bg-[#2B2E36] flex items-center rounded-md">
+        <div
+          class="cursor-pointer text-white px-3 md:px-6 py-1.5 rounded-md flex items-center justify-center text-center"
+        >
+          <!-- <p class="text-sm lg:text-base">US &#36; 0.000000</p> -->
+
+          <p class="text-sm lg:text-base">{{ balance | localeCurrency }}</p>
+        </div>
+
+        <a routerLink="/bank" class="redBtn mb-1 bg-[#FF0000] cursor-pointer">
+          <p class="text-sm lg:text-base">Deposit</p>
+        </a>
+      </div>
+
+      <div
+        class="bg-[#2B2E36] flex items-center justify-center px-3 py-2 rounded-md"
+      >
+        <i class="fa-solid fa-bell text-white"></i>
+      </div>
+    </div>
+  </ng-template>
+</div>
+<app-login
+  *ngIf="showLoginModal"
+  (showLoginModal)="(showLoginModal)"
+  (closeModal)="closeLoginModal()"
+  (showForgotPasswordModal)="showForgotPassword()"
+  (showSignupModal)="showSignupModal = true"
+></app-login>
+
+<app-forgot-password
+  *ngIf="showForgotPasswordModal"
+  [showForgotPasswordModal]="showForgotPasswordModal"
+  (closeModal)="showForgotPasswordModal = false"
+  (showLoginModal)="showLogin()"
+></app-forgot-password>
+
+<app-signup
+  *ngIf="showSignupModal"
+  (showSignupModal)="(showSignupModal)"
+  (closeModal)="showSignupModal = false"
+  (showLoginModal)="showLogin()"
+></app-signup>
+
+<!-- mobile sidemenu-->
+
+<div
+  *ngIf="showDrawer"
+  class="lg:hidden bg-gray-600 bg-opacity-30 h-screen w-screen fixed top-0 left-0"
+>
+  <div
+    class="w-full h-full flex flex-row justify-end"
+    [ngClass]="{
+      'open-left-modal-transition': showDrawer,
+      'close-left-modal-transition': !showDrawer
+    }"
+  >
+    <div
+      class="w-full bg-[#0E1015] overflow-y-auto"
+      [ngClass]="{
+        'translate-x-0 opacity-100': showDrawer,
+        '-translate-x-full opacity-0': !showDrawer
+      }"
+    >
+      <div class="w-full">
+        <app-drawer
+          [showFoldSideBar]="false"
+          [showLanguageSelector]="false"
+          [showLoginModal]="showLoginModal"
+          [showSignupModal]="showSignupModal"
+          [showForgotPasswordModal]="showForgotPasswordModal"
+          (goBack)="drawer(false)"
+          (foldSideBar)="drawer(false)"
+          (openLanguageModel)="showLanguageModel()"
+          (showLogin)="showLogin()"
+          (showSignup)="showSignupModal = true"
+          (showForgotPassword)="showForgotPassword()"
+        ></app-drawer>
+      </div>
+    </div>
+    <div
+      class="hidden"
+      (click)="drawer(false)"
+      (keydown.enter)="drawer(false)"
+      (keydown.space)="drawer(false); $event.preventDefault()"
+      tabindex="0"
+      role="button"
+      aria-label="Close drawer menu"
+    ></div>
+  </div>
+</div>
+
+<!-- Language Selector Modal -->
+<div
+  *ngIf="showLanguageSelector"
+  class="fixed inset-0 modelOverlay bg-opacity-30 flex items-center justify-center z-50"
+>
+  <app-language-select
+    (closeModal)="showLanguageSelector = false"
+  ></app-language-select>
+</div>

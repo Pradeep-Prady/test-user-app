@@ -1,0 +1,77 @@
+input {
+  // background-color: #2b2e36;
+  // border: 1px solid #2b2e36;
+  border-radius: 4px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+input:focus {
+  outline: none;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  display: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  display: none;
+  -webkit-appearance: none;
+}
+input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.gradient-border {
+  position: relative;
+  padding: 2px;
+  border-radius: 4px;
+  background: transparent;
+
+  &:focus-within {
+    background: linear-gradient(90deg, rgba(255, 0, 0, 0.4), #d3a2a2);
+  }
+
+  &:hover:not(:focus-within) {
+    background: linear-gradient(90deg, rgba(255, 0, 0, 0.4), #d3a2a2);
+  }
+
+  &.error {
+    background: linear-gradient(90deg, rgba(255, 0, 0, 0.4), #d3a2a2);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

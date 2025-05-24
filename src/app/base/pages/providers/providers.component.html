@@ -1,0 +1,224 @@
+<!-- <div class="scroll-component">
+  <div class="w-full flex items-center justify-between mb-1">
+    <p class="text-white">Providers</p>
+    <div class="flex items-center gap-2">
+      <div
+        *ngIf="showNavigation"
+        (click)="showProviders = true"
+        class="bg-[#24272A] redWhiteGradientBtn cursor-pointer px-3 py-1 rounded-[4px] flex items-center justify-center text-white"
+      >
+        <span>Show all</span>
+      </div>
+
+      <button
+        *ngIf="showNavigation"
+        [disabled]="isAtStart"
+        (click)="scrollLeft()"
+        [ngClass]="{
+          'opacity-50': isAtStart,
+          'cursor-pointer redWhiteGradientBtn': !isAtStart
+        }"
+        class="text-white bg-[#1e2128] rounded-[4px] w-8 h-8 hidden md:flex items-center justify-center transition-all"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+
+      <button
+        *ngIf="showNavigation"
+        [disabled]="isAtEnd"
+        (click)="scrollRight()"
+        [ngClass]="{
+          'opacity-50': isAtEnd,
+          'cursor-pointer redWhiteGradientBtn': !isAtEnd
+        }"
+        class="text-white bg-[#1e2128] rounded-[4px] w-8 h-8 hidden md:flex items-center justify-center transition-all"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+ 
+  <div
+    #scrollContainer
+    class="w-full flex flex-nowrap items-center my-3 overflow-x-scroll gap-2 scroll-container"
+  >
+    <div
+      *ngFor="let item of providers"
+      class="bg-[#292E38] h-[40px] md:h-[56px] w-[120px] md:w-[150px] shrink-0 rounded-[4px] card-item flex items-center justify-center p-3"
+    >
+      <img
+        class="h-[20px] md:h-[30px] grayscale-0 hover:grayscale-0 transition duration-300 cursor-pointer"
+        src="https://banners-and-assets.s3.us-east-1.amazonaws.com/aggregated-providers/{{
+          item
+        }}.svg"
+        [alt]="item"
+      />
+    </div>
+  </div>
+
+  
+  <div
+    *ngIf="showProviders"
+    class="fixed h-screen inset-0 bg-gray-800 bg-opacity-30 flex items-center justify-center z-30"
+  >
+    <div
+      class="fixed h-screen inset-0 bg-[#0E1015] md:bg-[#00000066]"
+      (click)="close()"
+    ></div>
+    <div
+      class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full h-full md:h-auto md:max-w-2xl mx-4 z-10"
+    >
+      <div class="text-white md:p-5 h-full flex flex-col">
+        <div class="flex h-[5%] md:h-auto mt-3 justify-between items-center">
+          <h2>Providers</h2>
+          <div
+            class="cursor-pointer group border-2 items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+            (click)="close()"
+          >
+            <i
+              class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+            ></i>
+          </div>
+        </div>
+
+        <div
+          class="flex w-full h-[5%] md:h-auto items-center gap-2 md:gap-4 mt-4"
+        >
+          <div
+            class="w-full flex gap-2 md:gap-4 bg-[#22252b] px-4 py-1.5 rounded-md items-center"
+            [ngClass]="{ searchActive: isSearchFocused }"
+            (focusin)="isSearchFocused = true"
+            (focusout)="isSearchFocused = false"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass text-white text-sm md:text-lg"
+            ></i>
+
+            <input
+              autofocus
+              type="text"
+              placeholder="Search Providers"
+              [(ngModel)]="searchTerm"
+              (keydown.enter)="onSearch()"
+              class="w-full h-9 md:h-10 text-sm md:text-base border-none outline-none bg-transparent text-white placeholder:text-white"
+            />
+
+            <div
+              *ngIf="searchTerm"
+              class="flex cursor-pointer text-[18px] text-[#FFFFFF99] hover:text-white"
+              (click)="clearSearch()"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="providersResults.length > 0"
+          class="w-full grid grid-cols-3 md:grid-cols-4 items-start gap-[10px] mt-5 overflow-y-auto h-auto max-h-full md:h-[400px] md:max-h-[400px] auto-rows-min pb-10 md:pb-0 myScrollHidden flex-grow"
+        >
+          <div
+            *ngFor="let provider of providersResults"
+            class="bg-[#292E38] h-[50px] md:h-[56px] w-[115px md:w-[150px shrink- rounded-[4px] card-item flex items-center justify-center p-3"
+          >
+            <img
+              class="h-[15px] md:h-[30px] grayscale-0 hover:grayscale-0 transition duration-300 cursor-pointer"
+              src="https://banners-and-assets.s3.us-east-1.amazonaws.com/aggregated-providers/{{
+                provider
+              }}.svg"
+              [alt]="provider"
+            />
+          </div>
+        </div>
+        <div
+          class="w-full items-start gap-[10px] mt-5 overflow-y-auto h-auto max-h-full md:h-[400px] md:max-h-[400px] auto-rows-min"
+          *ngIf="providersResults.length === 0"
+        >
+          <p class="text-center">No providers found</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="p-5">
+  <div class="relative bg-[#0E1015] rounded-[6px] w-full h-full">
+    <div class="text-white h-full flex flex-col">
+      <div class="flex h-[5%] md:h-auto mt-3 justify-between items-center">
+        <div class="flex items-center gap-2 text-base">
+          <i class="fa-solid fa-joystick"></i>
+          <h2>Providers</h2>
+        </div>
+      </div>
+
+      <div
+        class="flex w-full h-[5%] md:h-auto items-center gap-2 md:gap-4 mt-4"
+      >
+        <div
+          class="w-full flex gap-2 md:gap-4 bg-[#22252b] px-4 py-1.5 rounded-md items-center"
+          [ngClass]="{ searchActive: isSearchFocused }"
+          (focusin)="isSearchFocused = true"
+          (focusout)="isSearchFocused = false"
+        >
+          <i
+            class="fa-solid fa-magnifying-glass text-white text-sm md:text-lg"
+          ></i>
+
+          <input
+            autofocus
+            autocomplete="false"
+            type="text"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="Search Providers"
+            [(ngModel)]="searchTerm"
+            (keydown.enter)="onSearch()"
+            class="w-full h-9 md:h-10 text-sm md:text-base border-none outline-none bg-transparent text-white placeholder:text-white"
+          />
+
+          <div
+            *ngIf="searchTerm"
+            class="flex cursor-pointer text-[18px] text-[#FFFFFF99] hover:text-white"
+            (click)="clearSearch()"
+          >
+            <i class="fa-solid fa-circle-xmark"></i>
+          </div>
+        </div>
+
+        <div
+          (click)="onSearch()"
+          class="w-[80px] sm:w-[100px] md:w-[120px] lg:w-[150px] text-center providerBt bg-[#CE0000] justify-center h-full shrink-0 text-sm md:text-base cursor-pointer text-white flex gap-2 px-[8px] md:px-[12px] py-[12px] md:py-[14px] rounded-md items-center"
+        >
+          <p class="font-semibold">Search</p>
+        </div>
+      </div>
+      <div
+        *ngIf="providersResults.length > 0"
+        class="w-full grid grid-cols-3 md:grid-cols-6 items-start gap-[10px] mt-5 flex-grow"
+      >
+        <div
+          routerLink="/games/providers/{{ provider }}"
+          *ngFor="let provider of providersResults"
+          class="bg-[#292E38] h-[50px] md:h-[60px] w-[115px md:w-[150px shrink- rounded-[4px] card-item flex items-center justify-center p-3"
+        >
+          <img
+            class="h-[15px] md:h-[30px] grayscale-0 hover:grayscale-0 transition duration-300 cursor-pointer"
+            src="https://banners-and-assets.s3.us-east-1.amazonaws.com/aggregated-providers/{{
+              provider
+            }}.svg"
+            [alt]="provider"
+          />
+        </div>
+      </div>
+      <div
+        class="w-full items-start gap-[10px] mt-5 overflow-y-auto h-auto max-h-full md:h-[400px] md:max-h-[400px] auto-rows-min"
+        *ngIf="providersResults.length === 0"
+      >
+        <p class="text-center">No providers found</p>
+      </div>
+    </div>
+  </div>
+  <!-- </div>
+</div> -->
+</div>

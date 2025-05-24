@@ -1,0 +1,87 @@
+<div
+  *ngIf="showLanguageSelector"
+  class="fixed inset-0 z-50 overflow-hidden flex items-end lg:items-center h-full justify-center"
+>
+  <div class="modelOverlay overflow-hidden" (click)="close()"></div>
+
+  <div
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full h-auto md:max-w-md mx-4 z-10"
+    [ngClass]="{ 'open-modal-transition ': showLanguageSelector }"
+  >
+    <div class="w-full">
+      <div class="text-white p-5">
+        <div>
+          <div class="flex flex-col gap-7">
+            <div class="flex justify-between items-center">
+              <h2 class="text-base font-medium">Language</h2>
+              <div
+                class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 h-auto rounded-md bg-[#2B2E3666]"
+                (click)="close()"
+              >
+                <i
+                  class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+                ></i>
+              </div>
+            </div>
+
+            <div class="flex w-full items-center gap-2 md:gap-4">
+              <div
+                class="w-full flex gap-2 md:gap-4 bg-[#22252b] px-4 py-1.5 rounded-md items-center"
+                [ngClass]="{ searchActive: isSearchFocused }"
+                (focusin)="isSearchFocused = true"
+                (focusout)="isSearchFocused = false"
+              >
+                <div class="flex items-center justify-center">
+                  <i
+                    class="fa-solid fa-magnifying-glass text-white text-sm md:text-lg"
+                  ></i>
+                </div>
+
+                <input
+                  autofocus
+                  type="text"
+                  placeholder="Search"
+                  [(ngModel)]="searchTerm"
+                  class="w-full h-9 md:h-10 placeholder:text-gray-300 text-sm md:text-base border-none outline-none bg-transparent text-white"
+                />
+
+                <div
+                  class="flex cursor-pointer text-[18px] text-[#FFFFFF99] hover:text-[#ffffff]"
+                  *ngIf="searchTerm !== ''"
+                  (click)="clearSearch()"
+                >
+                  <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+              </div>
+            </div>
+            <div
+              class="h-[300px] flex flex-col overflow-y-scroll myLanguageScrol myScrollHidden gap-1 md:gap-2"
+            >
+              <div
+                class="flex rounded-[4px] px-[10px] py-[10px] md:py-[14px] items-center justify-between cursor-pointer hover:bg-[#2B2E3680] gap-2"
+                [ngClass]="{
+                  'bg-[#2B2E3680]': language.key === selectedLanguage.key
+                }"
+                *ngFor="let language of filteredLanguages"
+                (click)="selectLanguage(language)"
+              >
+                <p class="text-white">{{ language.name }}</p>
+                <label
+                  class="relative cursor-pointer flex items-center justify-center"
+                >
+                  <input
+                    type="radio"
+                    name="language"
+                    [value]="language.key"
+                    [(ngModel)]="selectedLanguage.key"
+                    class="custom-radio"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

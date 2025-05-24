@@ -1,0 +1,9 @@
+<!-- <div class="w-full flex flex-col items-center"> -->
+<div class="flex items-center my-4" #otpWrapper>
+  <ng-otp-input
+    #ngOtpInput
+    [config]="config"
+    (onInputChange)="onOtpChange($event)"
+  ></ng-otp-input>
+  <!-- </div> -->
+</div>

@@ -1,0 +1,147 @@
+<div class="w-full p-5 md:px-5 flex">
+  <div
+    class="md:bg-[#14171D] rounded-[6px] md:p-5 flex flex-col gap-5 font-medium w-full"
+  >
+    <h2 class="flex">Ledger</h2>
+
+    <div
+      class="w-full flex flex-col md:flex-row md:items-center justify-between"
+    >
+      <div class="flex flex-col gap-[2px]">
+        <p class="text-white text-[20px]">{{ balance | localeCurrency }}</p>
+        <p class="text-[#FFFFFFCC] text-[12px] md:text-[14px]">Total Balance</p>
+      </div>
+
+      <div class="flex flex-col  mt-3 md:mt-0 md:flex-row gap-3">
+        <app-normal-select
+          #typeSelect
+          [placeholder]="'Select Type'"
+          [defaultValue]="selectedTypeOption"
+          [value]="selectedTypeOption"
+          [options]="types"
+          (selectionChange)="onTypeOptionSelected($event)"
+        ></app-normal-select>
+
+        <app-normal-select
+          #periodSelect
+          [placeholder]="'Select Type'"
+          [defaultValue]="selectedPeriodOption"
+          [value]="selectedPeriodOption"
+          [options]="periods"
+          (selectionChange)="onPeriodOptionSelected($event)"
+        ></app-normal-select>
+
+        <app-date-range-input
+          *ngIf="selectedPeriodOption === 'custom'"
+          [max]="today"
+          (rangeChange)="onCustomDateRangeChange($event)"
+        ></app-date-range-input>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div
+            class="w-full flex cursor-pointer justify-center items-center px-[30px] py-[6px] rounded-[6px] bg-[#FF0000]"
+            (click)="applyFilters()"
+          >
+            <p>Filter</p>
+          </div>
+
+          <div
+            class="w-full flex justify-center redWhiteGradientBtNormal cursor-pointer items-center px-[30px] py-[6px] rounded-[6px]"
+            (click)="resetFilters()"
+          >
+            <p>Reset</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- table -->
+      <app-loading *ngIf="isLoading"></app-loading>
+
+      <div *ngIf="!isLoading">
+        <div
+          *ngIf="totalItems > 0; else noData"
+          class="w-full overflow-x-auto rounded-md bg-[#2B2E36] p-3"
+        >
+          <table class="w-full min-w-[800px] text-left text-white text-[14px]">
+            <thead class="bg-[#1C1F25] rounded-[4px]">
+              <tr>
+                <th class="px-5 py-4 font-medium cursor-pointer">
+                  Date & Time
+                </th>
+                <th class="px-5 py-4 font-medium cursor-pointer">Type</th>
+                <th class="px-5 py-4 font-medium cursor-pointer">Amount</th>
+
+                <!-- (click)="sortBy('openingBalance')" -->
+                <th
+                  (click)="sortValues('opening_balance')"
+                  class="px-5 py-4 font-medium cursor-pointer"
+                >
+                  Opening Balance
+                  <i
+                    *ngIf="sort_ledger_by === 'opening_balance'"
+                    class="fa-light fa-arrow-down-arrow-up"
+                  ></i>
+                </th>
+
+                <th
+                  class="px-5 py-4 font-medium cursor-pointer"
+                  (click)="sortValues('closing_balance')"
+                >
+                  Closing Balance
+                  <i
+                    *ngIf="sort_ledger_by === 'closing_balance'"
+                    class="fa-light fa-arrow-down-arrow-up"
+                  ></i>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="divide-y divide-[#2C2F36]">
+              <tr
+                *ngFor="let item of ledgerData; let i = index"
+                class="transition"
+                [ngClass]="{
+                  'bg-[#1C1F25] rounded-[4px]': i % 2 !== 0
+                }"
+              >
+                <td class="px-5 py-4">
+                  {{ item.updated_at | date : "MMM d, y | HH:mm" }}
+                </td>
+                <td class="px-5 py-4">{{ item.type }} {{ item.sub_type }}</td>
+                <td
+                  class="px-5 py-4 font-semibold"
+                  [ngClass]="{
+                    'text-green-400': item.amount > 0,
+                    'text-red-400': item.amount < 0
+                  }"
+                >
+                  {{ item.amount | localeCurrency }}
+                </td>
+                <td class="px-5 py-4">
+                  {{ item.opening_balance | localeCurrency }}
+                </td>
+                <td class="px-5 py-4">
+                  {{ item.closing_balance | localeCurrency }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div *ngIf="totalPages.length > 1" class="w-full flex justify-end">
+            <app-pagination
+              [page]="currentPage"
+              [totalPages]="totalPages.length"
+              (pageChange)="onPageChange($event)"
+            ></app-pagination>
+          </div>
+        </div>
+
+        <ng-template #noData>
+          <app-noresults></app-noresults>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="w-full p-5 md:px-5 flex">
+  <div
+    class="md:bg-[#14171D] rounded-[6px] md:p-5 flex flex-col gap-5 font-medium w-full"
+  >
+    <h2 class="{{ currentPage === '/bank' ? 'block' : 'hidden md:flex' }}">
+      Bank
+    </h2>
+
+    <div class="w-full flex flex-col md:flex-row gap-5 items-start">
+      <div class="w-full md:w-3/12 flex flex-col gap-3">
+        <div
+          class="w-full redWhiteGradientBtNormal p-3 flex-col gap-[2px] {{
+            currentPage === '/bank' ? 'flex' : 'hidden md:flex'
+          }}"
+        >
+            <p class="text-white text-[20px]">{{ balance | localeCurrency }}</p>
+            <p class="text-[#FFFFFFCC] text-[12px] md:text-[14px]">
+              Total Balance
+            </p>
+        </div>
+
+        
+        <div
+          class="w-full flex-col gap-3 {{
+            currentPage === '/bank' ? 'flex' : 'hidden md:flex'
+          }}"
+        >
+          <div
+            class="w-full bg-[#2B2E36] flex flex-col gap-2 p-3 rounded-[4px]"
+          >
+            <a
+              routerLink="/bank/deposit"
+              routerLinkActive
+              #BankDeposit="routerLinkActive"
+              class="
+        {{
+                BankDeposit.isActive
+                  ? 'bg-[#0E101580] text-white'
+                  : 'text-white md:text-[#ffffff60]'
+              }}  px-4 py-3 rounded-[4px]  flex items-center gap-2"
+            >
+              <i class="fa-solid fa-piggy-bank"></i>
+              <p>Deposit</p>
+            </a>
+
+            <a
+              routerLink="/bank/withdraw"
+              routerLinkActive
+              #BankWithdraw="routerLinkActive"
+              class="
+        {{
+                BankWithdraw.isActive
+                  ? 'bg-[#0E101580] text-white'
+                  : 'text-white md:text-[#ffffff60]'
+              }}  px-4 py-3 rounded-[4px]  flex items-center gap-2"
+            >
+              <i class="fa-solid fa-money-from-bracket"></i>
+              <p>Withdraw</p>
+            </a>
+            <a
+              routerLink="/bank/transactions"
+              routerLinkActive
+              #BankTransactions="routerLinkActive"
+              class="
+        {{
+                BankTransactions.isActive
+                  ? 'bg-[#0E101580] text-white'
+                  : 'text-white md:text-[#ffffff60]'
+              }}  px-4 py-3 rounded-[4px]  flex items-center gap-2"
+            >
+              <i class="fa-solid fa-money-bill-transfer"></i>
+              <p>Transactions</p>
+            </a>
+          </div>
+
+          <div class="w-full flex flex-col rounded-[4px]"></div>
+        </div>
+      </div>
+
+      <div class="w-full md:flex md:w-9/12">
+        <div class="w-full">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

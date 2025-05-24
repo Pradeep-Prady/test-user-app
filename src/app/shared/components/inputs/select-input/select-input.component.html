@@ -1,0 +1,111 @@
+<div
+  class="flex flex-col gap-2 w-full! select-container {{ containerClass }}"
+  (clickOutside)="onClickOutside($event)"
+>
+  <label *ngIf="label" [for]="id" class="text-sm text-gray-300">{{
+    label
+  }}</label>
+  <div
+    [class]="
+      'relative rounded-[10px] ' +
+      (isError ? 'border-b-2 border-red-500!' : 'gradient-border ') +
+      (inputContainerClass ? '' + inputContainerClass : '')
+    "
+  >
+    <div
+      [id]="id"
+      [class]="
+        'select-field w-full px-4 py-3 bg-[#2B2E36] rounded-lg outline-none flex justify-between items-center cursor-pointer ' +
+        (disabled ? 'opacity-60 cursor-not-allowed' : '') +
+        (inputClass ? ' ' + inputClass : '')
+      "
+      (click)="toggleDropdown()"
+    >
+      <div class="flex items-center text-white">
+        <img
+          *ngIf="getSelectedOption()?.flag"
+          class="mr-2 w-5 h-5"
+          src="{{ getSelectedOption()?.flag }}"
+          alt="{{ getSelectedOption()?.label }} "
+        />
+        <!-- <span [class.text-gray-500]="!value && value !== 0">
+          {{ getSelectedLabel() || placeholder }}
+        </span> -->
+
+        <span
+          *ngIf="getSelectedOption()?.currency"
+          class="ml-2 text-gray-400"
+          >{{ getSelectedOption()?.currency }}</span
+        >
+        <span class="ml-2">
+          <i
+            *ngIf="getSelectedOption()?.currency"
+            class="fa-regular fa-bracket-round"
+          ></i>
+          {{ getSelectedLabel() || placeholder }}
+          <i
+            *ngIf="getSelectedOption()?.currency"
+            class="fa-regular fa-bracket-round-right"
+          ></i>
+        </span>
+      </div>
+      <svg
+        class="chevron-icon"
+        [class.rotated]="isOpen"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6 9L12 15L18 9"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+
+    <!-- Dropdown options -->
+    <div
+      *ngIf="isOpen"
+      class="dropdown-menu absolute left-0 right-0 mt-1 bg-[#2B2E36] border border-gray-700 rounded-md max-h-60 overflow-y-auto z-10"
+    >
+      <div
+        *ngFor="let option of options"
+        class="dropdown-item px-4 py-2 text-white hover:bg-gray-700 cursor-pointer"
+        [class.text-gray-500]="option.disabled"
+        [class.bg-gray-800]="value === option.value"
+        (click)="selectOption(option)"
+      >
+        <div class="flex items-center">
+          <img
+            *ngIf="option.flag"
+            class="mr-2 w-5 h-5"
+            src="{{ option.flag }}"
+            alt="{{ option.label }} "
+          />
+          <span *ngIf="option.currency" class="ml-2 text-gray-400">{{
+            option.currency
+          }}</span>
+          <span class="ml-2">
+            <i *ngIf="!hideBracket" class="fa-regular fa-bracket-round"></i>
+            {{ option.label }}
+            <i
+              *ngIf="!hideBracket"
+              class="fa-regular fa-bracket-round-right"
+            ></i>
+          </span>
+        </div>
+      </div>
+      <div *ngIf="options.length === 0" class="px-4 py-2 text-gray-500">
+        No options available
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isError && errorMessage" class="text-red-500 text-sm">
+    {{ errorMessage }}
+  </div>
+</div>

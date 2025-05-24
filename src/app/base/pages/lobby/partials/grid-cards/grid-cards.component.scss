@@ -1,0 +1,169 @@
+.slots-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: white;
+}
+
+.slots-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.show-all-btn {
+  color: white;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.navigation-arrows {
+  gap: 4px;
+}
+
+.nav-arrow {
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.scrollable-container {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scrollable-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.cards-container {
+  display: flex;
+  height: 100%;
+  gap: 8px;
+  min-width: min-content;
+}
+
+.grid-cell {
+  background-color: #2D3036;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.game-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Makes images cover their container space */
+}
+
+.large-card {
+  flex: 0 0 auto;
+  height: 100%;
+  aspect-ratio: 1/1; /* Make large card square */
+}
+
+.small-cards-grid {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  height: 100%;
+}
+
+.small-card {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1; /* Make small cards square */
+}
+
+/* Mobile view - grid adjustments for square images */
+@media (max-width: 767px) {
+  .small-cards-grid {
+    grid-template-rows: unset;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-auto-rows: auto;
+  }
+  
+  .small-card {
+    aspect-ratio: 1/1;
+  }
+  
+  /* This ensures the squares maintain their shape */
+  .small-card .img-container {
+    position: relative;
+    padding-top: 100%; /* 1:1 aspect ratio */
+  }
+  
+  .small-card .img-container .game-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Responsive heights */
+@media (max-width: 639px) {
+  .slots-container {
+    height: auto;
+    padding-bottom: 16px;
+  }
+  
+  .cards-container {
+    height: auto;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .slots-container {
+    height: auto;
+    padding-bottom: 16px;
+  }
+  
+  .cards-container {
+    height: auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .slots-container {
+    height: 320px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .slots-container {
+    height: 360px;
+  }
+}

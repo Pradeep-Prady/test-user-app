@@ -1,0 +1,84 @@
+<div class="scroll-component">
+  <div class="w-full flex items-center justify-between mb-1">
+    <p class="text-white">Lotto60 Originals</p>
+    <div class="flex items-center gap-2">
+      <div
+        *ngIf="showNavigation"
+        class="bg-[#24272A] redWhiteGradientBtn px-3 py-1 rounded-sm flex items-center justify-center text-white"
+      >
+        <span class="">Show all</span>
+      </div>
+      <button
+        *ngIf="showNavigation"
+        (click)="scrollLeft()"
+        [disabled]="isAtStart"
+        class="text-white redWhiteGradientBtn bg-[#1e2128] rounded-sm w-8 h-8 hidden md:flex items-center justify-center transition-all"
+        [ngClass]="{
+          'cursor-pointer': !isAtStart,
+          'cursor-not-allowed opacity-50': isAtStart
+        }"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button
+        *ngIf="showNavigation"
+        (click)="scrollRight()"
+        [disabled]="isAtEnd"
+        class="text-white redWhiteGradientBtn bg-[#1e2128] rounded-sm w-8 h-8 hidden md:flex items-center justify-center transition-all"
+        [ngClass]="{
+          'cursor-pointer': !isAtEnd,
+          'cursor-not-allowed opacity-50': isAtEnd
+        }"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <div
+    #scrollContainer
+    class="w-full flex items-center my-0 md:my-3 overflow-x-scroll gap-2 scroll-container"
+  >
+    <div
+      *ngFor="let item of lottoOriginalGames"
+      style="background: url('/assets/images/lobby/lotto originals/{{item.game_key | lowercase}}.png'); background-repeat: no-repeat; background-position: center; background-size: cover;"
+      class="bg-[#292E38 w-[96px] h-[94px] md:w-[150px] md:h-[120px] lg:h-[180px] lg:w-[216px] shrink-0 rounded-md card-item relative cursor-pointer"
+    >
+      <div
+        class="flex items-center justify-center h-full text-white opacity-50"
+      ></div>
+ <div
+  class="card-overlay absolute inset-0 opacity-0 transition-opacity duration-300 flex items-center justify-center"
+>
+
+      <!-- *ngIf="item.play" -->
+        <div
+          class="bg-[#FFFFFF33] w-[35px] h-[35px] md:w-[45px] md:h-[45px] flex items-center justify-center rounded-full"
+        >
+          <i class="fa-solid fa-play text-white text-md md:text-2xl"></i>
+        </div>
+
+     
+      </div>
+    </div>  
+
+
+    <div
+   
+    style="background: url('/assets/images/lobby/lotto originals/three.png'); background-repeat: no-repeat; background-position: center; background-size: cover;"
+    class="bg-[#292E38 w-[96px] h-[94px] md:w-[150px] md:h-[120px] lg:h-[180px] lg:w-[216px] shrink-0 rounded-md card-item relative cursor-pointer"
+  >
+    <div
+      class="flex items-center justify-center h-full text-white opacity-50"
+    ></div>
+<div
+  class="card-overlay absolute inset-0 opacity-0 transition-opacity duration-300 flex items-center justify-center"
+>
+
+    <div  class="flex items-center justify-center">
+        <p class="text-white text-sm sm:text-base md:text-xl lg:mt-20">Coming Soon</p>
+      </div> 
+    </div>
+  </div>  
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="slots-container">
+  <div class="slots-header my-1 md:my-3">
+    <h3 class="font-averta-semibold"  >{{ title }}</h3>
+    <div class="header-controls">
+      <a
+        [routerLink]="['/games/categories', title.toLowerCase()]"
+        class="show-all-btn bg-[#1C1D21] rounded-[4px] redWhiteGradientBtn"
+      >
+        Show All
+      </a>
+      <div class="navigation-arrows flex">
+        <button
+          class="nav-arrow bg-[#1C1D21] rounded-[4px]   
+          {{ isScrollLeftDisabled ? '' : 'redWhiteGradientBtn' }}"
+          (click)="scrollLeft()"
+          [disabled]="isScrollLeftDisabled"
+          [ngClass]="{ 'opacity-50 cursor-not-allowed': isScrollLeftDisabled }"
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button
+          class="nav-arrow bg-[#1C1D21] rounded-[4px] {{
+            isScrollRightDisabled ? '' : 'redWhiteGradientBtn'
+          }}"
+          (click)="scrollRight()"
+          [disabled]="isScrollRightDisabled"
+          [ngClass]="{ 'opacity-50 cursor-not-allowed': isScrollRightDisabled }"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="scrollable-container" #scrollContainer>
+    <div class="cards-container">
+      <!-- Large card only shown on non-mobile views -->
+      <div
+        class="large-card grid-cell"
+        *ngIf="shouldShowLargeCard()"
+        [ngStyle]="getLargeCardStyle()"
+      >
+        <div class="img-container">
+          <img [src]="items[0].thumbnail" alt="game" class="game-image" />
+        </div>
+      </div>
+
+      <!-- Small cards in a grid layout - includes all cards on mobile -->
+      <div
+        class="small-cards-grid"
+        [style.gridTemplateColumns]="getGridTemplateColumns()"
+      >
+        <div
+          class="small-card grid-cell"
+          *ngFor="let item of getSmallCardsItems()"
+        >
+          <div class="img-container">
+            <img [src]="item.thumbnail" alt="game" class="game-image" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

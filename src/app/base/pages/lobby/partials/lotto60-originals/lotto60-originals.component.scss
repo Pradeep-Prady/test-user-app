@@ -1,0 +1,48 @@
+.scroll-component {
+  position: relative;
+  width: 100%;
+}
+
+.scroll-container {
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  padding: 0.5rem 0;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+button {
+  border: none;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.card-item {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.card-item:hover {
+  // transform: translateY(-5px);
+}
+
+.card-overlay {
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.3); /* Light black overlay */
+  transition: opacity 0.3s ease;
+  border-radius: 0.375rem;
+}
+
+.card-item:hover .card-overlay {
+  opacity: 1;
+}

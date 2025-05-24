@@ -1,0 +1,26 @@
+<div class="promotional-banner-container">
+  <swiper-container
+    #swiperContainer
+    class="mySwiper w-full flex items-center justify-center h-[340px]"
+  >
+    <swiper-slide *ngFor="let slide of slides; let i = index">
+      <div class="promotional-slide">
+        <img
+          [src]="slide.image"
+          [alt]="'Promotional slide ' + (i + 1)"
+          class=""
+        />
+      </div>
+    </swiper-slide>
+  </swiper-container>
+
+  <div class="custom-pagination mt-[8px] md:mt-[15px]">
+    <div
+      *ngFor="let slide of slides; let i = index"
+      #bulletIndicator
+      class="custom-bullet"
+      [ngClass]="{ active: i === activeIndex }"
+      (click)="goToSlide(i)"
+    ></div>
+  </div>
+</div>

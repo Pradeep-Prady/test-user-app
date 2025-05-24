@@ -1,0 +1,14 @@
+<div
+  class="bg-[#292E3866] rounded-md flex items-center px-2 md:px-4 py-3 overflow-x-scroll myScrollHidden gap-4 md:gap-7"
+>
+  <div class="text-white shrink-0" *ngFor="let category of categories">
+    <div
+      class="flex items-center text-sm md:text-base gap-2 sideBarCategoryItemBtn cursor-pointer"
+      [ngClass]="{'sideBarBtnCategoryItemActive': selectedCategory === category.title}"
+      (click)="categorySelected.emit(category.title)"
+    >
+      <i [class]="category.icon"></i>
+      <p>{{ category.title }}</p>
+    </div>
+  </div>
+</div>

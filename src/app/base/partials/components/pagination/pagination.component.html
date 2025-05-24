@@ -1,0 +1,36 @@
+<div class="flex justify-center  items-center gap-2 p-4 text-white">
+  <button
+    class="w-9 bg-[#23262D] h-9 flex items-center justify-center bg-[#2C2F36] rounded-[2px] disabled:opacity-50"
+    (click)="previousPage()"
+    [disabled]="page === 1"
+  >
+    <i class="fa-solid fa-angle-left"></i>
+  </button>
+
+  <div class="bg-[#23262D] rounded-[2px] flex gap-1 p-1">
+    <ng-container *ngFor="let pageNum of displayPages()">
+      <button
+        *ngIf="pageNum !== '...'; else ellipsis"
+        class="w-8 h-8 flex  items-center justify-center rounded-[2px]"
+        [ngClass]="{
+          'bg-[#CE0000]': pageNum === page,
+          'bg-[#363943]': pageNum !== page
+        }"
+        (click)="goToPage(pageNum)"
+      >
+        {{ pageNum }}
+      </button>
+      <ng-template #ellipsis>
+        <span class="px-1">...</span>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <button
+    class="w-9 bg-[#23262D] h-9 flex items-center justify-center bg-[#2C2F36] rounded-[2px] disabled:opacity-50"
+    (click)="nextPage()"
+    [disabled]="page === totalPages"
+  >
+    <i class="fa-solid fa-angle-right"></i>
+  </button>
+</div>

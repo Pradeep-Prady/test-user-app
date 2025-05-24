@@ -1,0 +1,54 @@
+horizontal-scroll.component.css .scroll-component {
+    position: relative;
+    width: 100%;
+  }
+  
+  .scroll-container {
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    padding: 0.5rem 0;
+  }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Optional: Add some styling to the buttons */
+  button {
+    border: none;
+    transition: all 0.2s ease;
+  }
+  
+  button:hover {
+    transform: scale(1.1);
+  }
+  
+  button:active {
+    transform: scale(0.95);
+  }
+  
+  .card-item {
+    /* Add transition for smoother animations if desired */
+    transition: transform 0.3s ease;
+  }
+  
+  // .card-item:hover {
+  //   transform: translateY(-5px);
+  // }
+  @keyframes slideUpFromBottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .open-modal-transition {
+    animation: slideUpFromBottom 0.4s ease-out forwards;
+  }
+  

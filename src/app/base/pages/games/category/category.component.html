@@ -1,0 +1,77 @@
+<div #main_page class="w-full p-5 md:p-5 xl:px-5 flex flex-col gap-4">
+  <div class="bg-[#22252b h-[380px overflow-hidden w-full rounded-xl">
+    <app-promotional-banner></app-promotional-banner>
+  </div>
+
+ 
+  <div class="flex w-full items-center gap-2 md:gap-4">
+    <div
+      class="w-full flex gap-2 md:gap-4 bg-[#22252b] px-4 py-1.5 rounded-md items-center"
+      [ngClass]="{ searchActive: isSearchFocused }"
+      (focusin)="isSearchFocused = true"
+      (focusout)="isSearchFocused = false"
+    >
+      <div class="flex items-center justify-center">
+        <i
+          class="fa-solid fa-magnifying-glass text-white text-sm md:text-lg"
+        ></i>
+      </div>
+      <input
+        type="text"
+        placeholder="Search"
+        [(ngModel)]="searchTerm"
+        (keydown.enter)="onSearch()"
+        class="w-full h-9 md:h-10 text-sm md:text-base border-none outline-none bg-transparent text-white placeholder:text-white"
+      />
+
+      <div
+        class=" flex cursor-pointer text-[18px]  text-[#FFFFFF99] hover:text-[#ffffff] {{
+          searchTerm !== '' ? 'block' : 'hidden'
+        }}"
+        (click)="clearSearch()"
+      >
+        <i class="fa-solid fa-circle-xmark"></i>
+      </div>
+    </div>
+
+    <div
+      (click)="onSearch()"
+      class="w-[80px] sm:w-[100px] md:w-[120px] lg:w-[150px] text-center providerBt bg-[#CE0000] justify-center h-full shrink-0 text-sm md:text-base cursor-pointer text-white flex gap-2 px-[8px] md:px-[12px] py-[12px] md:py-[14px] rounded-md items-center"
+    >
+      <p class="font-semibold">Search</p>
+    </div>
+  </div>
+
+  <div class="flex gap-2 text-base items-center" *ngIf="currentCategory">
+    <i [class]="currentCategory.icon"></i>
+    <h1>{{ currentCategory?.title }}</h1>
+  </div>
+
+  <div
+    *ngIf="games.length > 0"
+    class="w-full grid grid-cols-3 md:grid-col-6 lg:grid-cols-7 gap-[14px]"
+  >
+    <div *ngFor="let game of games">
+      <img class="rounded-[4px]" [alt]="game.game_id" [src]="game.thumbnail" />
+    </div>
+  </div>
+
+  <div
+    class="w-full flex items-center justify-center"
+    *ngIf="hasMoreData && games.length > 0"
+  >
+    <p
+      class="bg-[#2B2E36] cursor-pointer px-4 md:px-5 py-2 md:py-3 rounded-[4px]"
+      (click)="loadMore()"
+    >
+      Load More
+    </p>
+  </div>
+
+  <div
+    class="w-full items-start gap-[10px] mt-5 overflow-y-auto h-auto max-h-full md:h-[400px] md:max-h-[400px] auto-rows-min"
+    *ngIf="games.length === 0"
+  >
+    <app-noresults></app-noresults>
+  </div>
+</div>

@@ -1,0 +1,335 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div *ngIf="!isLoading">
+  <div class="w-full flex flex-col gap-3">
+    <div class="flex items-center gap-2">
+      <a routerLink="/profile" class="flex md:hidden">
+        <i
+          class="fa-solid cursor-pointer fa-chevron-left bg-[#2B2E36] px-3 py-2 text-[14px] rounded-[2px]"
+        ></i>
+      </a>
+      <h2>Personal Verification</h2>
+    </div>
+
+    <div
+      *ngIf="currentStatus === 'verification-setup'"
+      class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-3"
+    >
+      <div class="w-full flex flex-col gap-3">
+        <h2>Basic Verification Setup</h2>
+
+        <p class="text-[#FFFFFFCC] text-sm">
+          To serve you better we ask that you provide original identifying
+          documents. This will secure your account in cases of account recovery.
+          It also helps to ensure that the gifts or actual rewards you receive
+          are sent to the correct location.
+        </p>
+
+        <div class="w-full flex flex-col md:flex-row md:items-center gap-3">
+          <div class="flex items-center gap-3">
+            <img
+              class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+              src="./assets/images/profile/PersonalDetails.svg"
+              alt=""
+            />
+            <p>Personal Details</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <img
+              class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+              src="./assets/images/profile/FacialVerification.svg"
+              alt=""
+            />
+            <p>Facial Verification</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <img
+              class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+              src="./assets/images/profile/GovernmentID.svg"
+              alt=""
+            />
+            <p>Government ID</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <button
+          (click)="currentStatus = 'personal-details'"
+          class="btn w-full no-scale-on-hover"
+        >
+          Verify Now
+        </button>
+      </div>
+    </div>
+
+    <div
+      *ngIf="currentStatus === 'personal-details'"
+      class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-3"
+    >
+      <div class="w-full flex flex-col gap-3">
+        <h2>Personal Details</h2>
+
+        <form
+          (ngSubmit)="createKYCVerification()"
+          class="my-5 flex flex-col gap-5"
+        >
+          <div class="w-full grid md:grid-cols-2 gap-3">
+            <app-text-input
+              label="First Name"
+              placeholder="First Name"
+              [isError]="firstNameError !== ''"
+              [errorMessage]="firstNameError"
+              [type]="'text'"
+              [(ngModel)]="firstname"
+              name="firstName"
+              inputClass="bg-[#1C1F25]!"
+            ></app-text-input>
+
+            <app-text-input
+              label="Last Name"
+              placeholder="Last Name"
+              [isError]="lastNameError !== ''"
+              [errorMessage]="lastNameError"
+              [type]="'text'"
+              [(ngModel)]="lastname"
+              name="lastName"
+              inputClass="bg-[#1C1F25]!"
+            ></app-text-input>
+            <app-date-input
+              label="Birth Date"
+              placeholder="Select date"
+              [isError]="dobError !== ''"
+              [errorMessage]="dobError"
+              [min]="'1900-01-01'"
+              [max]="'2025-12-31'"
+              [(ngModel)]="dob"
+              inputClass="bg-[#1C1F25]!"
+              (dateChange)="onBirthDateChange($event)"
+              name="birthDate"
+            ></app-date-input>
+
+            <div class="flex flex-col gap-2 w-full">
+              <label class="text-sm text-gray-300"> Gender</label>
+              <div class="w-full grid grid-cols-3 gap-3">
+                <div
+                  (click)="gender = 'male'"
+                  class="relative cursor-pointer rounded-[4px] gradient-border {{
+                    gender === 'male' ? 'gradient-border-active' : ''
+                  }} "
+                >
+                  <p
+                    class="w-full px-4 py-3 bg-[#1C1F25] rounded-[4px] outline-none"
+                  >
+                    Male
+                  </p>
+                </div>
+                <div
+                  (click)="gender = 'female'"
+                  class="relative cursor-pointer rounded-[4px] gradient-border {{
+                    gender === 'female' ? 'gradient-border-active' : ''
+                  }}"
+                >
+                  <p
+                    class="w-full px-4 py-3 bg-[#1C1F25] rounded-[4px] outline-none"
+                  >
+                    Female
+                  </p>
+                </div>
+                <div
+                  (click)="gender = 'others'"
+                  class="relative cursor-pointer rounded-[4px] gradient-border {{
+                    gender === 'others' ? 'gradient-border-active' : ''
+                  }}"
+                >
+                  <p
+                    class="w-full px-4 py-3 bg-[#1C1F25] rounded-[4px] outline-none"
+                  >
+                    Others
+                  </p>
+                </div>
+              </div>
+
+              <p class="text-red-500 text-sm" *ngIf="genderError !== ''">
+                {{ genderError }}
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-2 flex items-center justify-end">
+            <button class="btn no-scale-on-hover" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      *ngIf="currentStatus === 'verification-initiated'"
+      class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-3"
+    >
+      <div class="w-full flex flex-col gap-3">
+        <img
+          class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+          src="./assets/images/profile/KYCVerificationInitiated.svg"
+          alt=""
+        />
+        <div class="flex flex-col gap-1">
+          <h2>KYC Verification Initiated</h2>
+
+          <p class="text-[#FFFFFFCC] text-sm">
+            The same URL has been sent to your email address {{ email }}
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-2 flex items-center justify-start">
+        <a
+          href="{{ veriff_session_url }}"
+          target="_blank"
+          class="btn no-scale-on-hover"
+          >Verify Now</a
+        >
+      </div>
+    </div>
+
+    <div
+      *ngIf="currentStatus === 'verification-pending'"
+      class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-3"
+    >
+      <div class="w-full flex flex-col gap-3">
+        <img
+          class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+          src="./assets/images/profile/VerificationPending.svg"
+          alt=""
+        />
+        <div class="flex flex-col gap-1">
+          <h2>Verification Pending</h2>
+
+          <p class="text-[#FFFFFFCC] text-sm">
+            Verification link has been sent to your mail id lavina&#64;gmail.com
+          </p>
+          <p class="text-[#FFFFFFCC] text-sm">
+            If you haven’t received any mail please contact
+            <span class="font-semibold text-white underline"
+              >support&#64;lotto60.com</span
+            >
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-2 flex items-center justify-start">
+        <button
+          (click)="resendVerificationLink()"
+          class="btn no-scale-on-hover"
+        >
+          Resend Verification Link
+        </button>
+      </div>
+    </div>
+
+    <div
+      *ngIf="currentStatus === 'kyc-submitted'"
+      class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-3"
+    >
+      <div class="w-full flex flex-col gap-3">
+        <img
+          class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+          src="./assets/images/profile/KYCSubmitted.svg"
+          alt=""
+        />
+        <div class="flex flex-col gap-1">
+          <h2>KYC Documents Submitted</h2>
+
+          <p class="text-[#FFFFFFCC] w-full md:w-6/12 text-sm">
+            KYC documents have been submitted and are awaiting approval, It wil
+            be updated within 3 to 4 business days
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="currentStatus === 'kyc-expired'"
+      class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-3"
+    >
+      <div class="w-full flex flex-col gap-3">
+        <img
+          class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+          src="./assets/images/profile/VerificationPending.svg"
+          alt=""
+        />
+        <div class="flex flex-col gap-1">
+          <h2>Verification Link Expired</h2>
+
+          <p class="text-[#FFFFFFCC] w-full md:w-6/12 text-sm">
+            Your KYC verification link has been expired, Please click the button
+            below to complete your KYC verification again
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-2 flex items-center justify-start">
+        <button
+          (click)="currentStatus = 'verification-setup'"
+          class="btn no-scale-on-hover"
+        >
+          Re-Do KYC Verification
+        </button>
+      </div>
+    </div>
+
+    <div
+      *ngIf="currentStatus === 'kyc-rejected'"
+      class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-3"
+    >
+      <div class="w-full flex flex-col gap-3">
+        <img
+          class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+          src="./assets/images/profile/KYCRejected.svg"
+          alt=""
+        />
+        <div class="flex flex-col gap-1">
+          <h2>KYC Verification Rejected</h2>
+
+          <p class="text-[#FFFFFFCC] w-full md:w-7/12 text-sm">
+            Your KYC verification has been rejected, In case of any discrepancy
+            please contact
+            <span class="font-semibold text-white underline"
+              >support&#64;lotto60.com</span
+            >
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-2 flex items-center justify-start">
+        <button
+          (click)="currentStatus = 'verification-setup'"
+          class="btn no-scale-on-hover"
+        >
+          Re-Do KYC Verification
+        </button>
+      </div>
+    </div>
+
+    <div
+      *ngIf="currentStatus === 'kyc-approved'"
+      class="w-full kyc-verified p-3 md:p-5 rounded-[4px] flex flex-col gap-3"
+    >
+      <div class="w-full flex flex-col gap-3">
+        <img
+          class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+          src="./assets/images/profile/KYCVerified.svg"
+          alt=""
+        />
+        <div class="flex flex-col gap-1">
+          <h2>KYC Verified 🎉</h2>
+
+          <p class="text-[#FFFFFFCC] w-full text-sm">
+            You can now withdraw funds from your Lotto60 account! Enjoy your
+            winnings!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

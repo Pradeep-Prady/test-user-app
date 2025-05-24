@@ -1,0 +1,282 @@
+@use "tailwindcss";
+@use "./app/base/partials/components/drawer/drawer.component.scss";
+@use "./app/base/pages/lobby/lobby.component.scss";
+@use "./app/base/pages/lobby/partials/categories/categories.component.scss";
+@use "./app/base/pages/lobby/partials/currency/currency.component.scss";
+@use "./app/base/pages/profile/partials/account-information/account-information.component.scss";
+@use "./app/base/pages/profile/partials/security/security.component.scss";
+@use "./app/base/pages/profile/partials/security/manage-tfa/manage-tfa.component.scss";
+@use "./app/base/partials/components/promotional-banner/promotional-banner.component.scss";
+@use "./app/base/pages/lobby/partials/lotto60-originals/lotto60-originals.component.scss";
+@use "./app/shared/components/inputs/text-input/text-input.component.scss";
+
+* {
+  font-family: "AvertaStd-Regular", sans-serif;
+}
+
+html {
+  scale: 100%;
+}
+
+@font-face {
+  font-family: "AvertaStd-Regular";
+  src: url("./assets/fonts/AvertaStd-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvertaStd-Semibold";
+  src: url("./assets/fonts/AvertaStd-Semibold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+// bg-[#0000009c]
+
+//
+.modelOverlay {
+  @apply bg-[#0000002d] backdrop-blur-sm fixed inset-0 h-full;
+}
+
+// mobile bar
+.mobileBarBtn {
+  @apply text-[#ffffff80] border-t-2  border-transparent;
+}
+.mobileBarBtnActive {
+  @apply text-[#FF0000] border-t-0 border-[#FF0000];
+}
+.redBtn {
+  @apply border-none cursor-pointer border-[#CE0000]  text-white px-4 md:px-6 py-1.5 rounded-md flex items-center justify-center text-center shadow-[0_4px_0px_0px_#8B0000] hover:translate-y-[0px] transition-all duration-200;
+}
+// @apply border-none cursor-pointer border-[#CE0000]  text-white px-4 md:px-6 py-1.5 rounded-md flex items-center justify-center text-center shadow-[0_4px_0px_0px_#8B0000] hover:translate-y-[0px] hover:shadow-[0_2px_0px_0px_#8B0000] transition-all duration-200;
+
+.depositBtn {
+  border-bottom: 3px solid;
+  background: rgba(255, 0, 0, 1);
+  border-image-source: linear-gradient(0deg, #a10000 0%, #ffb9b9 100%);
+}
+
+.iconGradient {
+  position: relative;
+  background: linear-gradient(180deg, #ce0000 0%, #d3a2a2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.redWhiteGradientBtNormal {
+  position: relative;
+  border-radius: 4px;
+  z-index: 0;
+  color: white; /* Text color */
+  transition: background-color 0.3s ease;
+  background-color: #ce000014; /* Dark brown background only on hover */
+}
+// background: linear-gradient(90deg, rgba(255, 0, 0, 0.40) 0%, #D3A2A2 100%)
+
+.redWhiteGradientBtNormal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  padding: 1.5px;
+  background: linear-gradient(90deg, #ff000066 0%, #ff000066 60%, #d3a2a2 100%);
+
+  // background: linear-gradient(90deg, #FF000066 0%, #D3A2A2 100%);
+  -webkit-mask: linear-gradient(#d3a2a2 0 0) content-box,
+    linear-gradient(#d3a2a2 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 1; /* Border is invisible by default */
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+// .redWhiteGradientBtNormal:hover {
+//   background-color: #462f2f; /* Dark brown background only on hover */
+// }
+
+.redWhiteGradientBtn {
+  position: relative;
+  border-radius: 4px;
+  z-index: 0;
+  color: white; /* Text color */
+  transition: background-color 0.3s ease;
+}
+
+.redWhiteGradientBtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  padding: 1.5px;
+   background: linear-gradient(90deg, #ff000066 0%, #ff000066 60%, #d3a2a2 100%);
+
+  // background: linear-gradient(90deg, #FF000066 0%, #D3A2A2 100%);
+  -webkit-mask: linear-gradient(#d3a2a2 0 0) content-box,
+    linear-gradient(#d3a2a2 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0; /* Border is invisible by default */
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.redWhiteGradientBtn:hover {
+  background-color: #462f2f; /* Dark brown background only on hover */
+}
+
+.redWhiteGradientBtn:hover::before {
+  opacity: 1; /* Border becomes visible on hover */
+}
+
+// Scrollbar
+
+.myScrollHidden::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+.myScroll {
+  scrollbar-width: thin;
+  scrollbar-color: #ce0000 #e0e0e0;
+}
+
+.myScroll::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+.myScroll::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.myScroll::-webkit-scrollbar-thumb {
+  background-color: #ce0000;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+}
+
+.myScroll::-webkit-scrollbar-thumb:hover {
+  background-color: #ce0000;
+}
+
+.myScroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.open-modal-transition {
+  animation: slideIn 0s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translate(-50%, 50%);
+  }
+  to {
+    transform: translate(100);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-modal {
+  animation: fadeInScale 0.5s ease-out forwards;
+}
+
+html {
+  font-size: 100%;
+}
+
+/* Scaling for laptop screens */
+@media screen and (max-width: 1440px) {
+  html {
+    font-size: 93.75%; /* 15px base */
+  }
+}
+
+/* Scaling for smaller laptops (like MacBook Air) */
+@media screen and (max-width: 1280px) {
+  html {
+    font-size: 87.5%; /* 14px base */
+  }
+}
+
+/* Scaling for very small laptops */
+@media screen and (max-width: 1024px) {
+  html {
+    font-size: 81.25%; /* 13px base */
+  }
+}
+
+gradient-border {
+  position: relative;
+  padding: 2px;
+  border-radius: 4px;
+  background: transparent;
+
+  &:focus-within {
+    background: linear-gradient(90deg, rgba(255, 0, 0, 0.4), #d3a2a2);
+  }
+
+  &:hover:not(:focus-within) {
+    background: linear-gradient(90deg, rgba(255, 0, 0, 0.4), #d3a2a2);
+  }
+
+  &.error {
+    background: linear-gradient(90deg, rgba(255, 0, 0, 0.4), #d3a2a2);
+  }
+
+  // input {
+  //   display: block;
+  //   width: 100%;
+  //   padding: 12px 16px;
+  //   border-radius: 8px;
+  //   background-color: #2B2E36;
+  //   outline: none;
+  //   color: #ffffff;
+  //   border: none;
+  // }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

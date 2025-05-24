@@ -1,0 +1,733 @@
+<div class="px-4 w-full h-full flex flex-col">
+  <!-- fold drawer  start-->
+  <div *ngIf="isDrawerFolded && showFoldSideBar; else unfold">
+    <!-- drawer header -->
+    <div class="sticky flex items-center justify-center top-0 mt-4">
+      <!-- title -->
+      <div
+        (click)="foldDrawer(!isDrawerFolded)"
+        (keydown.enter)="foldDrawer(!isDrawerFolded)"
+        (keydown.space)="foldDrawer(!isDrawerFolded); $event.preventDefault()"
+        tabindex="0"
+        role="button"
+        aria-label="Toggle drawer menu"
+        class="flex items-center justify-center w-10 h-10 rounded-full bg-[#14171D"
+      >
+        <img
+          src="./assets/images/logos/60red.svg"
+          class="object-contain w-6 cursor-pointer"
+          alt="lotto60"
+        />
+      </div>
+      <!-- <hr class="my-6" /> -->
+    </div>
+
+    <div class="bg-[#14171D] flex items-center rounded-md justify-between py-1">
+      <div div class="flex items-center gap-2 w-full px-2 py-1 cursor-pointer">
+        <img
+          src="/assets/images/common/SpinWheelIcon.png"
+          alt="SpinWheelIcon"
+          class="h-[25px] w-auto animate-spin"
+        />
+      </div>
+    </div>
+
+    <div class="space-y-2 mt-2">
+      <!-- lobby -->
+
+      <a
+        class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarBtn"
+        routerLink="/lobby"
+        routerLinkActive
+        #lobbyRLA="routerLinkActive"
+        [ngClass]="{
+          sideBarBtnActive: lobbyRLA.isActive,
+          'hover:bg-[#CE000038] ': !lobbyRLA.isActive
+        }"
+      >
+        <i class="fa-solid py-1 fa-solid fa-house font-medium"></i>
+      </a>
+
+      <a
+        class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarBtn"
+        routerLink="/bank"
+        routerLinkActive
+        #bankRLA="routerLinkActive"
+        [ngClass]="{
+          sideBarBtnActive: bankRLA.isActive,
+          'hover:bg-[#CE000038]': !bankRLA.isActive
+        }"
+      >
+        <i class="fa-solid py-1 fa-wallet font-medium"></i>
+      </a>
+
+      <a
+        class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarBtn"
+        routerLink="/ledger"
+        routerLinkActive
+        #ledgerRLA="routerLinkActive"
+        [ngClass]="{
+          sideBarBtnActive: ledgerRLA.isActive,
+          'hover:bg-[#CE000038]': !ledgerRLA.isActive
+        }"
+      >
+        <i class="fa-solid py-1 fa-file-contract font-medium"></i>
+      </a>
+
+      <a
+        class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarBtn"
+        routerLink="/bonus"
+        routerLinkActive
+        #bonusRLA="routerLinkActive"
+        [ngClass]="{
+          sideBarBtnActive: bonusRLA.isActive,
+          'hover:bg-[#CE000038]': !bonusRLA.isActive
+        }"
+      >
+        <i class="fa-solid py-1 fa-gift font-medium"></i>
+      </a>
+
+      <a
+        class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarBtn"
+        routerLink="/profile"
+        routerLinkActive
+        #profileRLA="routerLinkActive"
+        [ngClass]="{
+          sideBarBtnActive: profileRLA.isActive,
+          'hover:bg-[#CE000038]': !profileRLA.isActive
+        }"
+      >
+        <i class="fa-solid py-1 fa-user font-medium"></i>
+      </a>
+
+      <a
+        class="flex w-full items-center justify-center cursor-pointer sideBarBtn text-gray-500"
+        routerLink="/games/providers"
+        routerLinkActive
+        #providersRLA="routerLinkActive"
+        (click)="closeDrawer()"
+        [ngClass]="{
+          sideBarBtnActive: providersRLA.isActive,
+          'hover:bg-[#CE000038]': !providersRLA.isActive
+        }"
+      >
+        <i class="fa-solid fa-joystick text-sm font-medium"></i>
+      </a>
+
+      <!-- categories -->
+      <div class="relative category">
+        <div
+          class="category-menu fixed hidden shadow-2xl z-40 h-[300px] overflow-y-auto myScroll bg-[#14171D] p-4 w-44 rounded-lg left-14"
+        >
+          <div class="space-y-1.5 mt-1">
+            <p class="font-semibold text-sm text-white capitalize p-2">
+              category
+            </p>
+            <a
+              *ngFor="let category of categories"
+              [routerLink]="'/games' + category.link"
+              routerLinkActive
+              #categoryRLA="routerLinkActive"
+              [ngClass]="{
+                'bitolo-secondary-color sideBarFoldBtnActive':
+                  categoryRLA.isActive
+              }"
+              class="text-sm text-white capitalize p-2 rounded-xl flex items-center cursor-pointer sideBarFoldBtn font-averta-semibold"
+            >
+              {{ category.title }}
+            </a>
+          </div>
+        </div>
+        <div
+          class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarDropDownBtn"
+          [ngClass]="{
+            sideBarDropDownBtnActive: router.url.includes('category')
+          }"
+        >
+          <i class="fa-solid py-1 fa-layer-group font-medium"></i>
+        </div>
+      </div>
+
+      <!-- Language -->
+
+      <div class="relative category">
+        <div
+          (click)="showLanguageModel = true"
+          (keydown.enter)="showLanguageModel = true"
+          (keydown.space)="showLanguageModel = true; $event.preventDefault()"
+          class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarDropDownBtn"
+          [ngClass]="{
+            sideBarDropDownBtnActive: router.url.includes('category')
+          }"
+        >
+          <i class="fa-solid py-1 fa-globe font-medium"></i>
+        </div>
+      </div>
+
+      <!-- <div class="relative category">
+        <div
+          class="category-menu fixed hidden shadow-2xl z-40 text-white! bg-[#14171D] p-4 w-44 rounded-lg left-14"
+        >
+          <div class="space-y-1.5 mt-1">
+            <p class="font-semibold text-sm text-white capitalize p-2">
+              Languages
+            </p>
+            <a
+              routerLink="/languages/slots"
+              routerLinkActive
+              #languageRLA="routerLinkActive"
+              [ngClass]="{
+                ' sideBarFoldBtnActive': languageRLA.isActive
+              }"
+              class="text-sm text-white capitalize p-2 rounded-xl flex items-center cursor-pointer sideBarFoldBtn"
+            >
+              English
+            </a>
+          </div>
+        </div>
+        <div
+          class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarDropDownBtn"
+          [ngClass]="{
+            sideBarDropDownBtnActive: router.url.includes('category')
+          }"
+        >
+          <i class="fa-solid py-1 fa-globe font-medium"></i>
+        </div>
+      </div> -->
+
+      <a
+        class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarBtn"
+        routerLink="/faq"
+        routerLinkActive
+        #faqRLA="routerLinkActive"
+        [ngClass]="{
+          sideBarBtnActive: faqRLA.isActive,
+          'hover:bg-[#CE000038]': !faqRLA.isActive
+        }"
+      >
+        <i class="fa-solid py-1 fa-circle-question font-medium"></i>
+      </a>
+
+      <a
+        class="flex w-full justify-center items-center cursor-pointer text-gray-500 sideBarBtn"
+        routerLink="/live-support"
+        routerLinkActive
+        #liveSupportRLA="routerLinkActive"
+        [ngClass]="{
+          sideBarBtnActive: liveSupportRLA.isActive,
+          'hover:bg-[#CE000038]': !liveSupportRLA.isActive
+        }"
+      >
+        <i class="fa-solid py-1 fa-headset font-medium"></i>
+      </a>
+
+     
+    </div>
+  </div>
+  <!-- fold drawer  end-->
+
+  <!-- unfold drawer  start-->
+  <ng-template #unfold class="w-full">
+    <!-- drawer header -->
+    <div class="sticky top-0 z-20 bg-[#0E1015]">
+      <div class="flex items-center justify-center gap-2 py-4">
+        <div
+          class="hidden md:flex"
+          (click)="foldDrawer(!isDrawerFolded)"
+          (keydown.enter)="foldDrawer(!isDrawerFolded)"
+          (keydown.space)="foldDrawer(!isDrawerFolded); $event.preventDefault()"
+          tabindex="0"
+          role="button"
+          aria-label="Toggle drawer menu"
+        >
+          <i
+            class="fa-regular fa-bars-staggered text-white bg-[#2B2E3699] cursor-pointer p-2 rounded-md"
+            tabindex="0"
+            role="button"
+            aria-label="Toggle drawer menu"
+          ></i>
+        </div>
+        <!-- title -->
+        <a
+          routerLink="/"
+          class="flex justify-start items-center w-full cursor-pointer"
+        >
+          <img
+            src="./assets/images/logos/lotto60.svg"
+            class="object-contain w-28"
+            alt=""
+          />
+        </a>
+
+        <!-- <div *ngIf="!isLoggedIn" class="flex items-center gap-2 md:gap-3">
+          <div
+            (click)="showLoginModal = true"
+            (keydown.enter)="showLoginModal = true"
+            (keydown.space)="showLoginModal = true; $event.preventDefault()"
+            tabindex="0"
+            role="button"
+            aria-label="Login"
+            class="md:border-2 cursor-pointer border-white text-white px-4 md:px-6 py-1.5 rounded-md flex items-center justify-center text-center"
+          >
+            <p class="text-sm lg:text-base font-averta-semibold">Login</p>
+          </div>
+
+          <div
+            class="redBtn bg-[#FF0000] cursor-pointer"
+            (click)="showSignupModal = true"
+            (keydown.enter)="showSignupModal = true"
+            (keydown.space)="showSignupModal = true; $event.preventDefault()"
+            tabindex="0"
+            role="button"
+            aria-label="Signup"
+          >
+            <p class="text-sm lg:text-base font-averta-semibold">Signup</p>
+          </div>
+        </div>
+
+        <div *ngIf="isLoggedIn" class="flex gap-3">
+          <div class="bg-[#2B2E36] flex items-center rounded-md">
+            <div
+              class="cursor-pointer text-white px-3 md:px-6 py-1.5 rounded-md flex items-center justify-center text-center"
+            >
+              <p class="text-sm lg:text-base">US &#36; 0.000000</p>
+            </div>
+
+            <div class="redBtn mb-1 bg-[#FF0000] cursor-pointer">
+              <p class="text-sm lg:text-base">Deposit</p>
+            </div>
+          </div>
+
+          <div
+            class="bg-[#2B2E36] flex items-center justify-center px-3 py-2 rounded-md"
+          >
+            <i class="fa-solid fa-bell text-white"></i>
+          </div>
+        </div> -->
+      </div>
+
+      <!-- <hr class="my-6" /> -->
+    </div>
+
+    <!-- <app-spin-wheel></app-spin-wheel> -->
+
+    <div class="bg-[#14171D] flex items-center justify-between py-2">
+      <div
+        div
+        style="background: linear-gradient(90deg, #2f4f60 0%, #717b8b 100%)"
+        class="flex items-center gap-2 w-full px-2 py-1 rounded-md cursor-pointer"
+      >
+        <img
+          src="/assets/images/common/SpinWheelIcon.png"
+          alt="SpinWheelIcon"
+          class="h-[30px] z-0 animate-spin"
+        />
+        <p class="transition-opacity duration-300 text-white text-sm">
+          Spin & Win
+        </p>
+      </div>
+
+      <!-- <div>
+        <p
+          class="bg-[#333738] px-3 py-1 rounded-md transition-opacity duration-300"
+        >
+          4 spins left
+        </p>
+      </div> -->
+    </div>
+
+    <div class="px-0 my-3">
+      <div class="flex items-end gap-2">
+        <img
+          src="/assets/images/logos/60red.svg"
+          alt="SpinWheelIcon"
+          class="h-[20px]"
+        />
+        <p
+          class="text-sm text-white transition-opacity duration-300"
+          [class.opacity-0]="isDrawerFolded"
+        >
+          Lotto60 Originals
+        </p>
+      </div>
+
+      <div
+        class="w-full flex gap-2 my-3 {{
+          isDrawerFolded ? 'hidden' : ''
+        }} overflow-y-scroll myScrollHidden"
+      >
+        <div
+          *ngFor="let item of lottoOriginalGames"
+          style="
+            background: url('/assets/images/lobby/lotto originals/{{item.game_key | lowercase}}.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+          "
+          class="w-[68px] h-[66px] rounded-md bg-[#292E38] shrink-0"
+        ></div>
+        <div
+          style="
+            background: url('/assets/images/lobby/lotto originals/three.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+          "
+          class="w-[68px] h-[66px] rounded-md bg-[#292E38] shrink-0"
+        ></div>
+      </div>
+    </div>
+
+    <!-- main navigation -->
+    <div class="flex-1 space-y-2">
+      <div class="bg-[#14171D] flex flex-col gap-2 rounded-md">
+        <!-- lobby -->
+        <a
+          class="flex w-full items-center cursor-pointer sideBarBtn text-gray-500"
+          routerLink="/lobby"
+          routerLinkActive
+          #lobbyRLA="routerLinkActive"
+          (click)="closeDrawer()"
+          [ngClass]="{
+            sideBarBtnActive: lobbyRLA.isActive,
+            'hover:bg-[#CE000038]': !lobbyRLA.isActive
+          }"
+        >
+          <div class="w-1/12">
+            <i class="fa-solid fa-house text-sm"></i>
+          </div>
+
+          <p class="text-sm ml-2 mt-0.5 font-averta-semibold">Lobby</p>
+        </a>
+
+        <a
+          class="flex w-full items-center cursor-pointer sideBarBtn text-gray-500"
+          routerLink="/bank"
+          routerLinkActive
+          #bankRLA="routerLinkActive"
+          (click)="closeDrawer()"
+          [ngClass]="{
+            sideBarBtnActive: bankRLA.isActive,
+            'hover:bg-[#CE000038]': !bankRLA.isActive
+          }"
+        >
+          <div class="w-1/12">
+            <i class="fa-solid fa-wallet text-sm font-medium"></i>
+          </div>
+
+          <p class="text-sm ml-2 mt-0.5 font-averta-semibold">Bank</p>
+        </a>
+
+        <a
+          class="flex w-full items-center cursor-pointer sideBarBtn text-gray-500"
+          routerLink="/ledger"
+          routerLinkActive
+          #ledgerRLA="routerLinkActive"
+          (click)="closeDrawer()"
+          [ngClass]="{
+            sideBarBtnActive: ledgerRLA.isActive,
+            'hover:bg-[#CE000038]': !ledgerRLA.isActive
+          }"
+        >
+          <div class="w-1/12">
+            <i class="fa-solid fa-file-contract text-sm font-medium"></i>
+          </div>
+
+          <p class="text-sm ml-2 mt-0.5 font-averta-semibold">Ledger</p>
+        </a>
+
+        <a
+          class="flex w-full items-center cursor-pointer sideBarBtn text-gray-500"
+          routerLink="/bonus"
+          routerLinkActive
+          #bonusRLA="routerLinkActive"
+          (click)="closeDrawer()"
+          [ngClass]="{
+            sideBarBtnActive: bonusRLA.isActive,
+            'hover:bg-[#CE000038]': !bonusRLA.isActive
+          }"
+        >
+          <div class="w-1/12">
+            <i class="fa-solid fa-gift text-sm font-medium"></i>
+          </div>
+
+          <p class="text-sm ml-2 mt-0.5 font-averta-semibold">Bonus</p>
+        </a>
+
+        <a
+          class="flex w-full items-center cursor-pointer sideBarBtn text-gray-500"
+          routerLink="/profile"
+          routerLinkActive
+          #profileRLA="routerLinkActive"
+          (click)="closeDrawer()"
+          [ngClass]="{
+            sideBarBtnActive: profileRLA.isActive,
+            'hover:bg-[#CE000038]': !profileRLA.isActive
+          }"
+        >
+          <div class="w-1/12">
+            <i class="fa-solid fa-user text-sm font-medium"></i>
+          </div>
+
+          <p class="text-sm ml-2 mt-0.5 font-averta-semibold">Profile</p>
+        </a>
+      </div>
+
+      <!-- categories -->
+
+      <div class="bg-[#14171D] rounded-md">
+        <div
+          class="flex w-full items-center  justify-between cursor-pointer sideBarDropDownBtn border-b-2   sideBarDropDownBtnActive text-gray-500 mt-4 {{
+            true ? 'sideBarDropDownBtnActive' : 'hover:bg-[#CE000038]'
+          }}"
+          (click)="handleDropdown(dropdowns.category)"
+          (keydown.enter)="handleDropdown(dropdowns.category)"
+          (keydown.space)="
+            handleDropdown(dropdowns.category); $event.preventDefault()
+          "
+          tabindex="0"
+          role="button"
+          [attr.aria-expanded]="selectedDropdown === dropdowns.category"
+          aria-controls="category-dropdown-content"
+        >
+          <div class="flex items-center w-full">
+            <div class="w-1/12">
+              <i class="fa-solid fa-layer-group text-sm font-medium"></i>
+            </div>
+
+            <p class="text-sm ml-2 mt-0.5 capitalize font-averta-semibold">
+              Category
+            </p>
+          </div>
+
+          <!-- <i
+            class="fa-regular fa-chevron-down text-sm mr-4"
+            [ngClass]="{
+              'rotate-180 transition-transform duration-300':
+                selectedDropdown === dropdowns.category
+            }"
+          ></i> -->
+        </div>
+        <div class="mt-3 flex transition-all duration-300">
+          <!-- <div class="w-1/12"></div> -->
+          <div class="space-y-2 w-full z-0">
+            <a
+              *ngFor="let category of categories"
+              class="flex w-full items-center cursor-pointer group sideBarCategoryItemBt sideBarBtn"
+              [routerLink]="'/games' + category.link"
+              routerLinkActive
+              #categoryRLA="routerLinkActive"
+              (click)="closeDrawer()"
+              [ngClass]="{
+                sideBarBtnActive: categoryRLA.isActive,
+                'hover:bg-[#CE000038]': !categoryRLA.isActive
+              }"
+            >
+              <div
+                class="w-1/12 text-[#FFFFFFB2] group-hover:text-white {{
+                  categoryRLA.isActive ? 'text-white' : ''
+                }}"
+              >
+                <i [class]="category.icon + ' text-sm '"></i>
+              </div>
+              <p
+                class="text-sm ml-2 mt-0.5 text-[#FFFFFFB2] group-hover:text-white {{
+                  categoryRLA.isActive ? 'text-white' : ''
+                }} font-averta-semibold"
+              >
+                {{ category.title }}
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="bg-[#14171D] rounded-md">
+        <a
+          class="flex w-full items-center cursor-pointer sideBarBtn text-gray-500"
+          routerLink="/games/providers"
+          routerLinkActive
+          #providersRLA="routerLinkActive"
+          (click)="closeDrawer()"
+          [ngClass]="{
+            sideBarBtnActive: providersRLA.isActive,
+            'hover:bg-[#CE000038]': !providersRLA.isActive
+          }"
+        >
+          <div class="w-1/12">
+            <i class="fa-solid fa-joystick text-sm font-medium"></i>
+          </div>
+
+          <p class="text-sm ml-2 mt-0.5 font-averta-semibold">Providers</p>
+        </a>
+      </div>
+
+      <!-- hr line -->
+
+      <div>
+        <div class="border-b-2 border-[#ffffff3d]"></div>
+      </div>
+
+      <!-- language -->
+      <div class="bg-[#14171D] lg:hidden rounded-md">
+        <div
+          class="flex w-full items-center justify-between cursor-pointer sideBarDropDownBtn text-gray-500 mt-4"
+          (click)="openLanguageModel.emit()"
+          (keydown.enter)="openLanguageModel.emit()"
+          (keydown.space)="openLanguageModel.emit(); $event.preventDefault()"
+          tabindex="0"
+          role="button"
+          aria-label="Select language"
+        >
+          <div class="flex items-center w-full">
+            <div class="w-1/12">
+              <i class="fa-solid fa-globe text-sm font-medium"></i>
+            </div>
+
+            <p class="text-sm ml-2 mt-0.5 capitalize font-averta-semibold">
+              {{ currentLanguage.name }}
+            </p>
+          </div>
+
+          <i
+            class="fa-regular -rotate-90 fa-chevron-down text-sm"
+            [ngClass]="{
+              ' transition-transform duration-300':
+                selectedDropdown === dropdowns.language
+            }"
+          ></i>
+        </div>
+      </div>
+
+      <div class="bg-[#14171D] hidden lg:flex rounded-md">
+        <div class="w-full">
+          <div
+            class="flex w-full items-center justify-between cursor-pointer sideBarDropDownBtn text-gray-500 mt-4"
+            (click)="showLanguageModel = true"
+            (keydown.enter)="showLanguageModel = true"
+            (keydown.space)="showLanguageModel = true; $event.preventDefault()"
+            tabindex="0"
+            role="button"
+            aria-label="Select language"
+          >
+            <div class="flex items-center w-full">
+              <div class="w-1/12">
+                <i class="fa-solid fa-globe text-sm font-medium"></i>
+              </div>
+
+              <p class="text-sm ml-2 mt-0.5 capitalize font-averta-semibold">
+                            {{ currentLanguage.name }}
+
+              </p>
+            </div>
+
+            <i
+              class="fa-regular -rotate-90 fa-chevron-down text-sm"
+              [ngClass]="{
+                ' transition-transform duration-300':
+                  selectedDropdown === dropdowns.language
+              }"
+            ></i>
+          </div>
+          <div
+            class="mt-3 flex transition-all duration-300"
+            *ngIf="selectedDropdown === dropdowns.language"
+          >
+            <!-- <div class="w-1/12"></div> -->
+            <div class="space-y-3 w-full">
+              <!-- English -->
+              <a
+                class="flex w-full items-center cursor-pointer text-gray-500 sideBarBtn"
+                routerLink="/categories/slots"
+                routerLinkActive
+                #payinRLA="routerLinkActive"
+                (click)="closeDrawer()"
+                [ngClass]="{
+                  sideBarBtnActive: payinRLA.isActive,
+                  'hover:bg-[#CE000038]': !payinRLA.isActive
+                }"
+              >
+                <div class="w-1/12">
+                  <i class="fa-regular fa-globe text-sm"></i>
+                </div>
+
+                <p class="text-sm ml-2 mt-0.5 font-averta-semibold">English</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Faq -->
+      <div class="bg-[#14171D] rounded-md">
+        <a
+          class="flex w-full items-center cursor-pointer sideBarBtn text-gray-500"
+          routerLink="/faq"
+          routerLinkActive
+          #faqRLA="routerLinkActive"
+          (click)="closeDrawer()"
+          [ngClass]="{
+            sideBarBtnActive: faqRLA.isActive,
+            'hover:bg-[#CE000038]': !faqRLA.isActive
+          }"
+        >
+          <div class="w-1/12">
+            <i class="fa-solid fa-circle-question text-sm font-medium"></i>
+          </div>
+
+          <p class="text-sm ml-2 mt-0.5 font-averta-semibold">FAQ</p>
+        </a>
+      </div>
+      <!-- Live Support -->
+      <div class="bg-[#14171D] rounded-md">
+        <a
+          class="flex w-full items-center cursor-pointer sideBarBtn text-gray-500"
+          routerLink="/live-support"
+          routerLinkActive
+          #liveSupportRLA="routerLinkActive"
+          (click)="closeDrawer()"
+          [ngClass]="{
+            sideBarBtnActive: liveSupportRLA.isActive,
+            'hover:bg-[#CE000038]': !liveSupportRLA.isActive
+          }"
+        >
+          <div class="w-1/12">
+            <i class="fa-solid fa-headset text-sm font-medium"></i>
+          </div>
+
+          <p class="text-sm ml-2 mt-0.5 font-averta-semibold">Live Support</p>
+        </a>
+      </div>
+    </div>
+  </ng-template>
+  <!-- unfold drawer end -->
+</div>
+
+<!-- Language Selector Modal -->
+<!-- class="modelOverlay bg-opacity-30 flex items-center justify-center z-50" -->
+<div *ngIf="showLanguageModel">
+  <app-language-select
+    (closeModal)="showLanguageModel = false"
+  ></app-language-select>
+</div>
+
+<app-login
+  *ngIf="showLoginModal"
+  (showLoginModal)="(showLoginModal)"
+  (closeModal)="showLoginModal = false"
+  (showForgotPasswordModal)="showForgotPasswordPage()"
+  (showSignupModal)="showSignupModal = true"
+></app-login>
+
+<app-forgot-password
+  *ngIf="showForgotPasswordModal"
+  [showForgotPasswordModal]="showForgotPasswordModal"
+  (closeModal)="showForgotPasswordModal = false"
+  (showLoginModal)="showLoginPage()"
+></app-forgot-password>
+
+<app-signup
+  *ngIf="showSignupModal"
+  (showSignupModal)="(showSignupModal)"
+  (closeModal)="showSignupModal = false"
+  (showLoginModal)="showLoginPage()"
+></app-signup>

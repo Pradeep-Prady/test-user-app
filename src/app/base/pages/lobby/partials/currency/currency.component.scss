@@ -1,0 +1,93 @@
+.currencyBg {
+  background: linear-gradient(
+    270deg,
+    rgba(78, 88, 112, 0.56) 0.96%,
+    rgba(55, 55, 71, 0.8) 100%
+  );
+}
+
+.currency-item {
+  position: relative;
+  border-radius: 8px;
+  z-index: 0;
+  transition: all 0.3s ease;
+}
+
+.currency-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  padding: 1px; /* Controls thickness of the border */
+  background: linear-gradient(90deg, #982929 0%, #d3a2a2 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.currency-item:hover::before,
+.currency-item.active::before {
+  opacity: 1;
+}
+
+.currency-name {
+  max-width: 0;
+  transition: max-width 0.3s ease, margin-left 0.3s ease;
+}
+
+.currency-item:hover .currency-name,
+.currency-item.active .currency-name {
+  max-width: 100px;
+  margin-left: 8px;
+}
+
+/* Fix for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .currency-item.active .currency-name {
+    max-width: 100px;
+    margin-left: 8px;
+  }
+}
+
+.scroll-container {
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  padding: 0.5rem 0;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}  
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.depositBtn {
+  border: none;
+  cursor: pointer;
+  color: white;
+  padding: 10px 1rem;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 4px 0px 0px #8B0000;
+  transition: all 0.2s ease;
+  background-color: #CE0000;
+}
+
+@media (min-width: 768px) {
+  .depositBtn {
+    padding: 10px 1.5rem;
+  }
+}
+
+@media (hover: hover) {
+  .depositBtn:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0px 0px #8B0000;
+  }
+}

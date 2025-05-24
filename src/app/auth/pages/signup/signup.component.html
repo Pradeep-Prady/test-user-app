@@ -1,0 +1,366 @@
+<div
+  *ngIf="showSignupModal"
+  class="fixed inset-0 z-50 flex items-center overflow-y-auto justify-center"
+>
+  <div
+    class="modelOverlay"
+    (click)="close()"
+    (keydown.enter)="close()"
+    tabindex="0"
+    role="button"
+    aria-label="Close"
+  ></div>
+
+  <!-- Signup    -->
+  <div
+    *ngIf="currentPage === 'signup'"
+    [ngClass]="{ 'animate-modal': showSignupModal }"
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full h-full md:h-auto max-w-4xl mx-4 z-10"
+  >
+    <div class="w-full grid md:grid-cols-2">
+      <div class="rightGradient text-white hidden md:flex flex-col gap-5 p-5">
+        <div>
+          <img
+            class="h-[25px]"
+            src="/assets/images/logos/lotto60White.svg"
+            alt="logo"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <h2 class="text-2xl font-averta-semibold">Welcome to Lotto60</h2>
+          <div class="text-sm flex flex-col gap-1">
+            <p class="">Signup to win with Lotto60</p>
+            <p>Get up to 300% bonus</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-white p-5">
+        <div class="flex flex-col gap-7">
+          <div class="flex md:hidden justify-between items-center">
+            <div>
+              <img
+                class="h-[25px]"
+                src="/assets/images/logos/lotto60.svg"
+                alt="logo"
+              />
+            </div>
+            <div
+              class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+              (click)="close()"
+              (keydown.enter)="close()"
+              tabindex="0"
+              role="button"
+              aria-label="Close"
+            >
+              <i
+                class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+              ></i>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl font-averta-semibold">Signup</h2>
+            <div
+              class="cursor-pointer group border-2 hidden md:flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+              (click)="currentPage = 'close'"
+              (keydown.enter)="currentPage = 'close'"
+              tabindex="0"
+              role="button"
+              aria-label="Close"
+            >
+              <i
+                class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="flex justify-between items-center">
+          <h2 class="text-xl font-averta-semibold">Signup</h2>
+          <div
+            class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+            (click)="currentPage = 'close'"
+          >
+            <i
+              class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+            ></i>
+          </div>
+        </div> -->
+
+        <form (ngSubmit)="signup()" class="my-5 flex flex-col gap-5">
+          <div class="flex gap-2">
+            <div
+              (click)="nextPage = false"
+              class="w-[70px] h-[6px] rounded-full  cursor-pointer  {{
+                !nextPage ? 'bg-[#CE0000]' : 'bg-[#2B2E36]'
+              }} "
+            ></div>
+            <div
+              class="w-[70px] h-[6px] rounded-full 
+            {{ nextPage ? 'bg-[#CE0000]' : 'bg-[#2B2E36]' }}
+            "
+            ></div>
+          </div>
+          <!-- Page 1 -->
+          <div *ngIf="!nextPage">
+            <p class="mb-3">Let's create a Lotto60 account</p>
+            <div class="flex flex-col gap-3">
+              <app-text-input
+                label="Email ID"
+                placeholder="Email"
+                [isError]="emailError !== ''"
+                [errorMessage]="emailError"
+                [type]="'email'"
+                [(ngModel)]="email"
+                name="email"
+              ></app-text-input>
+              <app-username-input
+                label="Username"
+                placeholder="Username"
+                [isError]="usernameError !== ''"
+                [errorMessage]="usernameError"
+                [type]="'text'"
+                [(ngModel)]="username"
+                (ngModelChange)="onUsernameChange()"
+                name="username"
+                [isValid]="!usernameExists && usernameError === ''"
+              ></app-username-input>
+
+              <app-password-input
+                label="Password"
+                placeholder="Password"
+                [(ngModel)]="password"
+                (ngModelChange)="onPasswordChange()"
+                name="password"
+                [isError]="passwordError !== ''"
+                [errorMessage]="passwordError"
+                [isValid]="false"
+              >
+              </app-password-input>
+
+              <p
+                class="w-full bg-[#CE0000] text-center mt-3 py-[10px] cursor-pointer rounded-[4px]"
+                (click)="goToNextPage()"
+                (keydown.enter)="goToNextPage()"
+                tabindex="0"
+                role="button"
+                aria-label="Next"
+              >
+                Next
+              </p>
+            </div>
+          </div>
+          <!-- Page 2 -->
+          <div *ngIf="nextPage">
+            <p class="mb-3">Personal details</p>
+            <div class="flex flex-col gap-3">
+              <div class="flex gap-2">
+                <app-text-input
+                  label="First Name"
+                  placeholder="First Name"
+                  [isError]="firstNameError !== ''"
+                  [errorMessage]="firstNameError"
+                  [type]="'text'"
+                  [(ngModel)]="firstName"
+                  name="firstName"
+                ></app-text-input>
+                <app-text-input
+                  label="Last Name"
+                  placeholder="Last Name"
+                  [isError]="lastNameError !== ''"
+                  [errorMessage]="lastNameError"
+                  [type]="'text'"
+                  [(ngModel)]="lastName"
+                  name="lastName"
+                ></app-text-input>
+              </div>
+              <app-date-input
+                label="Birth Date"
+                id="birthDate"
+                placeholder="Select date"
+                [isError]="birthDateError !== ''"
+                [errorMessage]="birthDateError"
+                [min]="'1900-01-01'"
+                [max]="'2025-12-31'"
+                [(ngModel)]="birthDate"
+                (dateChange)="onBirthDateChange($event)"
+                name="birthDate"
+              ></app-date-input>
+
+              <app-select-input
+                label="Currency"
+                id="currency"
+                placeholder="Select Currency"
+                [options]="currencyOptions"
+                [isError]="!!currencyError"
+                [errorMessage]="currencyError"
+                [(ngModel)]="currency"
+                name="currency"
+              ></app-select-input>
+
+              <div class="flex items-start justify-start gap-2">
+                <div
+                  class="checkbox-wrapper mt-1 w-[30px] h-[30px]"
+                  [class.checked]="terms"
+                >
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    name="terms"
+                    [(ngModel)]="terms"
+                  />
+                </div>
+                <p class="">
+                  I have read and agreed to <strong>Terms of Use</strong> and
+                  confirm that I'm 18+ years old.
+                </p>
+              </div>
+
+              <div *ngIf="termsError" class="text-red-500 text-sm">
+                {{ termsError }}
+              </div>
+
+              <button
+                class="w-full bg-[#CE0000] text-center mt-3 py-[10px] cursor-pointer rounded-[4px]"
+                type="submit"
+                [disabled]="isLoading"
+              >
+                {{ isLoading ? "Signing up..." : "Signup" }}
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-sm text-[#FFFFFF99]">
+              Already a Lotto60 member?
+              <span
+                class="text-white cursor-pointer"
+                (click)="backToLogin()"
+                (keydown.enter)="backToLogin()"
+                tabindex="0"
+                role="button"
+                aria-label="Login"
+                >Login</span
+              >
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Close Signup -->
+  <div
+    *ngIf="currentPage === 'close'"
+    [ngClass]="{ 'animate-modal': showSignupModal }"
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full max-w-lg mx-4 z-10"
+  >
+    <div class="text-white p-5">
+      <div class="flex justify-end items-center">
+        <div
+          class="cursor-pointer flex justify-center items-center group border-2 border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+          (click)="close()"
+          (keydown.enter)="close()"
+          tabindex="0"
+          role="button"
+          aria-label="Close modal"
+        >
+          <i
+            class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+          ></i>
+        </div>
+      </div>
+
+      <div class="my-5 flex flex-col gap-3">
+        <div class="w-full flex items-start justify-start">
+          <img
+            src="/assets/images/common/sadFace.svg"
+            alt="logo"
+            class="h-[40px]"
+          />
+        </div>
+
+        <h2 class="text-xl font-averta-semibold">Leaving already?</h2>
+
+        <div class="text-sm text-[#FFFFFFCC] mb-5">
+          <p>
+            Sign up in just a minute and grab up to 🎰 $1000 for Casino games
+            and 🎲 $300 for other games!
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-5">
+          <div
+            (click)="currentPage = 'signup'"
+            (keydown.enter)="currentPage = 'signup'"
+            tabindex="0"
+            role="button"
+            aria-label="Back to Signup"
+            class="bg-[#CE0000] text-center py-[10px] cursor-pointer rounded-[4px]"
+          >
+            <p>Back to Signup</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Success -->
+  <div
+    *ngIf="currentPage === 'success'"
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full max-w-lg mx-4 z-10"
+  >
+    <div class="text-white p-5">
+      <div class="flex justify-end items-center">
+        <div
+          class="cursor-pointer group border-2 border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+          (click)="close()"
+          (keydown.enter)="close()"
+          tabindex="0"
+          role="button"
+          aria-label="Close"
+        >
+          <i
+            class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+          ></i>
+        </div>
+      </div>
+
+      <div class="my-5 flex flex-col gap-3">
+        <div class="w-full flex items-start justify-start">
+          <img
+            src="/assets/images/common/mailGreen.svg"
+            alt="logo"
+            class="h-[50px] w-auto"
+          />
+        </div>
+
+        <h2 class="text-xl font-averta-semibold">
+          Thank you for registering with us!
+        </h2>
+
+        <div class="text-sm text-[#FFFFFFCC] mb-5">
+          <p>
+            A confirmation email has been sent to your registered email. Please
+            follow the instructions.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-5">
+          <div
+            (click)="sendVerificationEmail()"
+            (keydown.enter)="sendVerificationEmail()"
+            tabindex="0"
+            role="button"
+            aria-label="Resend Verification Link"
+            class="bg-[#CE0000] text-center py-[10px] cursor-pointer rounded-[4px]"
+          >
+            <p>Resend Verification Link</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

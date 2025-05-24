@@ -1,0 +1,147 @@
+<div
+  *ngIf="currentPage === 'choose-method'"
+  class="bg-[var(--bg-light-gray)] rounded-[4px] p-[10px] md:p-[20px] flex flex-col gap-[14px]"
+>
+  <h2>Choose Deposit Method</h2>
+
+  <div class="w-full grid grid-cols-2 md:flex gap-5">
+    <div
+      (click)="activePaymentMethod = method.id"
+      class="relative   {{
+        activePaymentMethod === method.id
+          ? 'redWhiteGradientBtNormal'
+          : 'redWhiteGradientBtn'
+      }}   cursor-pointer lg:w-[150px] p-[10px]! lg:px-[15px]!  lg:py-[0px]! rounded-[4px] flex items-center justify-center bg-[var(--bg-dark-gray)]!"
+      *ngFor="let method of paymentMethods[0].payment_methods"
+    >
+      <img class="" [alt]="method.name" [src]="method.logo" />
+    </div>
+  </div>
+  <p class="text-red-500 text-sm">{{ paymentMethodsError }}</p>
+
+  <div class="w-full md:w-1/2 flex flex-col gap-[24px]">
+    <app-text-input
+      [icon]="paymentMethods[0].currency_name"
+      [placeholder]="'Enter Amount '"
+      label="Enter Amount"
+      [type]="'number'"
+      [isError]="amoutError !== ''"
+      [(ngModel)]="amount"
+      [errorMessage]="amoutError"
+      [inputContainerClass]="' bg-[var(--bg-dark-gray)]! '"
+      [inputClass]="' bg-[var(--bg-dark-gray)]! '"
+    ></app-text-input>
+
+    <div
+      (click)="deposit()"
+      class="bg-[var(--red)] p-[10px] text-center cursor-pointer rounded-[4px]"
+    >
+      <p>Deposit</p>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="currentPage === 'fiat-pay'"
+  class="bg-[var(--bg-light-gray)] rounded-[4px] p-[20px] flex flex-col items-center justify-center gap-[14px]"
+>
+  <div class="w-full md:w-1/2 flex flex-col items-center justify-center gap-[24px]">
+    <div class="flex flex-col items-center">
+      <h2 class="text-[20px] font-semibold">
+        {{ amount | localeCurrency }}
+      </h2>
+      <p class="text-[#FFFFFFCC]">You Deposit</p>
+    </div>
+
+    <div>
+      <p>Open your app to scan the QR & make the payment</p>
+    </div>
+
+    <div
+      class="redWhiteGradientBtNormal w-full text-center p-[10px] cursor-pointer"
+    >
+      <p>Copy QR Code</p>
+    </div>
+
+    <div class="bg-[#4DA45233] p-[10px] rounded-[4px] text-[#FFFFFFCC] text-sm">
+      <p>Instructions</p>
+      <p>1. The QR code will be valid for 30 minutes</p>
+      <p>
+        2. Please ensure you retain the transaction reference number for future
+        use.
+      </p>
+    </div>
+
+    <div
+      (click)="isStatusPage = true"
+      class="w-full bg-[var(--red)] p-[10px] text-center cursor-pointer rounded-[4px]"
+    >
+      <p>Continue</p>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="isStatusPage"
+  class="modelOverlay bg-opacity-30 flex items-center justify-center z-50"
+>
+  <div class="modelOverlay" (click)="isStatusPage = false"></div>
+
+  <div
+    class="relative bg-[#191C23] rounded-[6px] overflow-hidden w-full h-auto md:max-w-md mx-4 z-10"
+    [ngClass]="{ 'open-modal-transition ': isStatusPage }"
+  >
+    <div class="text-white p-5 flex flex-col gap-[20px]">
+      <div class="flex justify-between items-center">
+        <h2 class="text-sm font-averta-semibold">Transaction Details</h2>
+
+        <div
+          class="cursor-pointer flex items-center justify-center group border-2 border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+          (click)="isStatusPage = false"
+          (keydown.enter)="isStatusPage = false"
+          tabindex="0"
+          role="button"
+          aria-label="Close modal"
+        >
+          <i
+            class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+          ></i>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <div>
+          <p>100 BRL</p>
+          <p class="text-[#FFFFFF99] text-sm">11-05-2025 | 11:02:40</p>
+        </div>
+        <p class="bg-[var(--pending)] px-3 py-1 rounded-full">Pending</p>
+      </div>
+
+      <div class="">
+        <div class="flex justify-between items-center">
+          <p class="text-[#FFFFFFB2]">Type</p>
+          <p>Deposit</p>
+        </div>
+        <div class="flex justify-between items-center">
+          <p class="text-[#FFFFFFB2]">Method</p>
+          <p>Fiat</p>
+        </div>
+      </div>
+
+      <div
+        class="flex bg-[var(--bg-light-gray)] p-[10px] rounded-[4px] justify-between items-center"
+      >
+        <div>
+          <p class="text-sm text-[#FFFFFFCC]">Transaction ID</p>
+          <p>F-1790216986065903642</p>
+        </div>
+        <div>
+          <p
+            class="redWhiteGradientBtNormal -full px-3 py-1 rounded-full cursor-pointer"
+          >
+            Copy
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

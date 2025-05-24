@@ -1,0 +1,20 @@
+<div
+  class="w-screen h-screen flex flex-col items-center justify-center overflow-hidden"
+>
+  <img src="./assets/images/no-internet.svg" class="object-contain" />
+  <p class="text-sm font-semibold capitalize mt-4">Oops! connection lost</p>
+
+  <p class="text-sm text-gray-500 mt-3 text-center">
+    No internet connection found. Check your connection and try again.
+  </p>
+
+  <small class="text-sm text-gray-500 mt-2 text-center"
+    >You can go back to the previous page
+    <span
+      class="bitolo-secondary-color underline text-sm cursor-pointer font-medium"
+      (click)="retry()"
+    >
+      previous page
+    </span>
+  </small>
+</div>

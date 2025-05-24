@@ -1,0 +1,226 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div *ngIf="!isLoading">
+  <div class="w-full flex flex-col gap-[20px]">
+    <div class="flex flex-col gap-[14px]">
+      <div class="flex items-center gap-2">
+        <a routerLink="/profile" class="flex md:hidden">
+          <i
+            class="fa-solid cursor-pointer fa-chevron-left bg-[#2B2E36] px-3 py-2 text-[14px] rounded-[2px]"
+          ></i>
+        </a>
+        <h2>Account Information</h2>
+      </div>
+
+      <div
+        class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex items-center gap-[20px]"
+      >
+        <div
+          class="w-[50px] h-[50px] rounded-full bg-[#707A8A] flex shrink-0 items-center justify-center"
+        >
+          <p class="text-[24px] font-semibold uppercase">
+            {{ user?.username.charAt(0) }}
+          </p>
+        </div>
+
+        <div class="w-full">
+          <p>{{ user?.username | titlecase }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-[14px]">
+      <h2>Preferences</h2>
+
+      <div
+        class="w-full bg-[#2B2E36] md:bg-transparent grid grid-cols-2 md:gap-5"
+      >
+        <div
+          class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-5"
+        >
+          <p class="font-semibold">Currency</p>
+
+          <div
+            class="w-full p-3 rounded-[4px] bg-[#0E101599] flex items-center gap-2"
+          >
+            <img
+              src="/assets/images/common/flags/{{
+                user?.preferred_currency
+              }}.svg"
+              alt="user?.preferred_currency"
+              class="w-[20px] h-[20px]"
+            />
+            <p>{{ user?.preferred_currency }}</p>
+          </div>
+        </div>
+        <div
+          class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-5"
+        >
+          <p class="font-medium">Language</p>
+
+          <div
+            (click)="openLanguageSelector()"
+            (keydown.enter)="openLanguageSelector()"
+            (keydown.space)="openLanguageSelector(); $event.preventDefault()"
+            class="w-full p-3 flex items-center justify-between cursor-pointer rounded-[4px] bg-[#0E101599]"
+          >
+            <p>{{ language.name }}</p>
+
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full gap-5">
+      <div
+        class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-5"
+      >
+        <div class="w-full flex items-center justify-between">
+          <p class="font-medium">Personal Details</p>
+          <button class="btn" (click)="startEditing()">Edit</button>
+        </div>
+
+        <div class="w-full grid md:grid-cols-3 gap-3">
+          <div class="w-full bg-[#2B2E36] rounded-[4px] flex flex-col gap-2">
+            <p class="font-medium">First Name</p>
+
+            <div class="w-full capitalize p-3 rounded-[4px] bg-[#0E101599]">
+              <p>{{ user?.firstname }}</p>
+            </div>
+          </div>
+
+          <div class="w-full bg-[#2B2E36] rounded-[4px] flex flex-col gap-2">
+            <p class="font-medium">Last Name</p>
+
+            <div class="w-full capitalize p-3 rounded-[4px] bg-[#0E101599]">
+              <p>{{ user?.lastname }}</p>
+            </div>
+          </div>
+          <div class="w-full bg-[#2B2E36] rounded-[4px] flex flex-col gap-2">
+            <p class="font-medium">DOB</p>
+
+            <div class="w-full p-3 rounded-[4px] bg-[#0E101599]">
+              <p>{{ user?.dob | date : "dd/MM/yyyy" }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full gap-5">
+      <div
+        class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex flex-col gap-5"
+      >
+        <div class="w-full flex items-center justify-between">
+          <p class="font-medium">Email Verification</p>
+        </div>
+
+        <div class="w-full bg-[#2B2E36] rounded-[4px] flex flex-col gap-2">
+          <div
+            class="w-full p-3 rounded-[4px] bg-[#0E1015] email-verified flex items-center justify-between"
+          >
+            <p class="text-[#FFFFFFB2]">{{ user?.email }}</p>
+
+            <div class="flex items-center gap-2 text-[#4DA452]">
+              <i class="fa-solid fa-shield-check"></i>
+              <p>Verified</p>
+            </div>
+          </div>
+        </div>
+        <div class="text-[#FFFFFF99] text-sm">
+          <p>
+            According to the security policy of Lotto60, the registered email
+            cannot be changed.
+          </p>
+          <p>
+            If you want to change your e-mail address kindly contact our
+            <span class="text-white underline cursor-pointer"
+              >tech support</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Language Selector Modal -->
+<div
+  *ngIf="showLanguageModel"
+  class="modelOverlay bg-opacity-30 flex items-center justify-center z-50"
+>
+  <app-language-select
+    (closeModal)="showLanguageModel = false"
+  ></app-language-select>
+</div>
+
+<div
+  *ngIf="editModel"
+  class="modelOverlay bg-opacity-30 flex items-center justify-center z-50"
+>
+  <div class="modelOverlay" (click)="editModel = false"></div>
+
+  <div
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full h-auto md:max-w-md mx-4 z-10"
+    [ngClass]="{ 'open-modal-transition ': editModel }"
+  >
+    <div class="text-white p-3 md:p-5">
+      <div>
+        <div class="flex flex-col gap-7">
+          <div class="flex justify-between items-center">
+            <h2 class="font-averta-medium">Edit Profile</h2>
+            <div
+              class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+              (click)="editModel = false"
+              (keydown.enter)="editModel = false"
+              tabindex="0"
+              role="button"
+              aria-label="Close modal"
+            >
+              <i
+                class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <form (ngSubmit)="update()" class="my-5 flex flex-col gap-5">
+          <app-text-input
+            label="First Name"
+            placeholder="First Name"
+            [(ngModel)]="firstname"
+            name="firstname"
+            [isError]="firstnameError !== ''"
+            [errorMessage]="firstnameError"
+          ></app-text-input>
+
+          <app-text-input
+            label="Last Name"
+            placeholder="Last Name"
+            [(ngModel)]="lastname"
+            name="lastname"
+            [isError]="lastnameError !== ''"
+            [errorMessage]="lastnameError"
+          ></app-text-input>
+
+          <app-date-input
+            label="Birth Date"
+            id="birthDate"
+            placeholder="Select date"
+            [min]="'1900-01-01'"
+            [max]="'2016-12-31'"
+            [(ngModel)]="dob"
+            name="dob"
+          ></app-date-input>
+          <button
+            class="w-full bg-[#CE0000] text-center py-[10px] cursor-pointer rounded-[4px]"
+            type="submit"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

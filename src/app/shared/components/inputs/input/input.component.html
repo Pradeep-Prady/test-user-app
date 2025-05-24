@@ -1,0 +1,32 @@
+<div class="flex flex-col gap-2 w-full">
+  <label *ngIf="label" [for]="id" class="text-sm text-gray-300">
+    {{ label }}
+  </label>
+  {{ isError }}
+  <div
+    [class]="
+      ' rounded-[10px] ' +
+      (isError ? 'border-b-2 border-red-500' : 'gradient-border')
+    "
+  >
+    <!-- <div class="gradient-border" [ngClass]="{'error': isError}"> -->
+
+    <input
+      [type]="type"
+      [id]="id"
+      [(ngModel)]="value"
+      (blur)="onTouched()"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+      [class]="'placeholder:text-gray-300 placeholder:text-sm ' "
+      (ngModelChange)="onChange($event)"
+    />
+  </div>
+  <div *ngIf="isError && errorMessage" class="text-red-500 text-sm">
+    {{ errorMessage }}
+  </div>
+</div>

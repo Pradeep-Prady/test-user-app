@@ -1,0 +1,94 @@
+<div class="w-full h-screen bg-[#0E1015] flex items-center justify-center">
+  <div
+    *ngIf="!isLinkExpired"
+    class="relative text-white bg-[#191C23] rounded-[6px] overflow-hidden p-5 w-full h-full md:h-auto md:w-96 md:max-w-2xl mx-4 z-10"
+  >
+    <div class="flex justify-between items-center">
+      <img class="h-[35px]" src="/assets/images/logos/lotto60.svg" alt="logo" />
+      <div>
+        <a
+          class="cursor-pointer group border-2 border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+          routerLink="/"
+          tabindex="0"
+          role="button"
+          aria-label="Close modal"
+        >
+          <i
+            class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+          ></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-5 flex flex-col gap-3">
+      <div class="w-full flex items-start justify-start">
+        <img
+          src="/assets/images/common/lockGreen.svg"
+          alt="logo"
+          class="h-[40px]"
+        />
+      </div>
+
+      <h2 class="text-xl font-averta-semibold">Email Verified Successfully</h2>
+
+      <div class="w-full mt-5 flex items-center justify-center">
+        <a
+          class="w-full bg-[#CE0000] text-center py-[10px] cursor-pointer rounded-[4px]"
+          routerLink="/"
+          type="submit"
+          >Back to Home</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="isLinkExpired"
+    class="relative text-white bg-[#191C23] rounded-[6px] overflow-hidden p-5 w-full h-full md:h-auto max-w-lg mx-4 z-10"
+  >
+    <div class="flex justify-between items-center">
+      <img class="h-[35px]" src="/assets/images/logos/lotto60.svg" alt="logo" />
+      <div>
+        <a
+          class="cursor-pointer group border-2 border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+          routerLink="/"
+          tabindex="0"
+          role="button"
+          aria-label="Close modal"
+        >
+          <i
+            class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+          ></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-5 flex flex-col gap-3">
+      <div class="w-full flex items-start justify-start">
+        <img
+          src="/assets/images/common/lockGreen.svg"
+          alt="logo"
+          class="h-[40px]"
+        />
+      </div>
+
+      <h2 class="text-xl font-averta-semibold">Link has been expired</h2>
+
+      <div class="text-sm text-[#FFFFFF99]">
+        <p>To generate new verification link, login to your account</p>
+      </div>
+
+      <div class="mt-5 w-full flex items-center justify-center">
+        <a
+          class="bg-[#CE0000] w-full text-center py-[10px] cursor-pointer rounded-[4px]"
+          routerLink="/"
+          tabindex="0"
+          role="button"
+          aria-label="Back to home"
+        >
+          <a>Back to Home</a>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

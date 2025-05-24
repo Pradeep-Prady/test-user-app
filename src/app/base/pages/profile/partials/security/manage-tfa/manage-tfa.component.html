@@ -1,0 +1,203 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div *ngIf="!isLoading">
+  <div
+    class="w-full bg-[#2B2E36] p-3 md:p-5 overflow-hidden rounded-[4px] flex items-end justify-between gap-3"
+  >
+    <div class="w-8/12 md:w-7/12 flex flex-col gap-3">
+      <img
+        src="/assets/images/common/redShield.svg"
+        alt="security"
+        class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+      />
+
+      <h2>Two Factor Authentication</h2>
+
+      <p class="text-[#FFFFFFCC] text-sm">
+        Enable 2FA using google authenticator to protect your account from
+        unauthorized access.
+      </p>
+    </div>
+
+    <div class="">
+      <button
+        *ngIf="!isTFAEnabled; else disableBtn"
+        (click)="enableTFA()"
+        class="btn no-scale-on-hover"
+      >
+        Enable 2FA
+      </button>
+
+      <ng-template #disableBtn>
+        <button
+          (click)="openDisabelModel()"
+          class="btn shrink-0 flex no-scale-on-hover"
+        >
+          Disable 2FA
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<!-- two factor -->
+<div
+  *ngIf="showTFAModel"
+  class="modelOverlay overflow-hidden bg-opacity-30 flex items-center justify-center z-50"
+>
+  <div class="modelOverlay" (click)="showTFAModel = false"></div>
+  <div
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full h-auto md:max-w-md mx-4 z-10"
+    [ngClass]="{ 'open-modal-transition ': showTFAModel }"
+  >
+    <div class="text-white p-3 md:p-5">
+      <div class="flex flex-col gap-[20px]">
+        <div class="flex flex-col gap-7">
+          <div class="flex justify-between items-center">
+            <h2 class="font-averta-medium">Enable 2FA</h2>
+            <div
+              class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+              (click)="showTFAModel = false"
+              (keydown.enter)="showTFAModel = false"
+              tabindex="0"
+              role="button"
+              aria-label="Close modal"
+            >
+              <i
+                class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-[12px]">
+          <p class="text-sm text-center text-[#FFFFFF99]">
+            Enable Two-factor Authentication to protect your account from
+            unauthorized access.
+          </p>
+
+          <img
+            class="w-[100px] md:w-[150px] h-[100px] md:h-[150px] rounded-[4px] mx-auto"
+            src="{{ qrImage }}"
+            alt="logo"
+          />
+        </div>
+        <div class="flex flex-col gap-[12px]">
+          <p class="text-sm text-center text-[#FFFFFF99]">
+            Scan the QR code with Google Authenticator App
+          </p>
+
+          <div class="w-full flex items-center justify-center gap-5">
+            <img
+              class="w-[80px] md:w-[120px] rounded-[4px]"
+              src="/assets/images/common/playstore.svg"
+              alt="logo"
+            />
+            <img
+              class="w-[80px] md:w-[120px] rounded-[4px]"
+              src="/assets/images/common/appstore.svg"
+              alt="logo"
+            />
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-[12px]">
+          <p class="text-center">Or enter the secret key manually</p>
+          <div class="w-full flex items-center justify-between gap-2">
+            <div class="w-full qrcode-bg px-2 py-2">
+              <p class="text-sm text-white">{{ secretKey }}</p>
+            </div>
+
+            <p
+              (click)="copySecretKey()"
+              class="bg-[#2B2E36] px-3 py-2 cursor-pointer rounded-[4px] transition-all duration-300"
+              [ngClass]="{ '': showCopySuccess }"
+            >
+              {{ showCopySuccess ? "Copied!" : "Copy" }}
+            </p>
+          </div>
+        </div>
+
+        <form (ngSubmit)="confirmTFA()" class="flex flex-col">
+          <div class="w-full flex flex-col gap-[12px] items-center">
+            <p class="ml-1">Enter 6-digit verification code</p>
+            <div class="flex items-center" #otpWrapper>
+              <app-otp-input
+                (otpChange)="handleOtpChange($event)"
+              ></app-otp-input>
+            </div>
+          </div>
+
+          <button
+            [disabled]="otpValue.length < 6"
+            [ngClass]="{
+              'bg-[#CE000080] text-gray-300': otpValue.length < 6,
+              'bg-[#CE0000]': otpValue.length >= 6
+            }"
+            class="w-full text-center py-[10px] cursor-pointer rounded-[4px]"
+            type="submit"
+          >
+            Enable
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- disable tfa  -->
+<div
+  *ngIf="disableTFAModel"
+  class="modelOverlay overflow-hidden bg-opacity-30 flex items-center justify-center z-50"
+>
+  <div class="modelOverlay" (click)="disableTFAModel = false"></div>
+
+  <div
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full h-auto md:max-w-md mx-4 z-10"
+    [ngClass]="{ 'open-modal-transition ': disableTFAModel }"
+  >
+    <div class="text-white p-3 md:p-5">
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-7">
+          <div class="flex justify-between items-center">
+            <h2 class="font-averta-medium">Disable 2FA</h2>
+            <div
+              class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+              (click)="disableTFAModel = false"
+              (keydown.enter)="disableTFAModel = false"
+              tabindex="0"
+              role="button"
+              aria-label="Close modal"
+            >
+              <i
+                class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <form (ngSubmit)="disableTFA()" class="flex flex-col">
+          <div class="w-full flex flex-col gap-[12px]">
+            <p class="ml-1">Enter 6-digit verification code</p>
+
+            <app-otp-input
+              (otpChange)="handleOtpChange($event)"
+            ></app-otp-input>
+          </div>
+
+          <button
+            [disabled]="otpValue.length < 6"
+            [ngClass]="{
+              'bg-[#CE000080] text-gray-300': otpValue.length < 6,
+              'bg-[#CE0000]': otpValue.length >= 6
+            }"
+            class="w-full text-center py-[10px] cursor-pointer rounded-[4px]"
+            type="submit"
+            >
+            Disable
+          </button>
+          <!-- (click)="disableTFA()" -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

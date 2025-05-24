@@ -1,0 +1,84 @@
+<div class="w-full py-5 flex items-center justify-between text-white">
+  <div class="hidden md:flex">
+    <p class="font-averta-semibold">Last Round Winnings</p>
+  </div>
+
+  <div
+    class="bg-[#292E3866] rounded-[4px] flex items-center gap-3 md:gap-[10px] p-[8px]"
+  >
+    <button
+      class="flex items-center no-scale-on-hover  gap-2  text-sm md:text-base px-2 md:px-4 cursor-pointer duration-300 ease-in-out py-2 rounded-[4px] {{
+        activeTab === 'lotto60Originals' ? 'bg-[#CE0000]' : 'bg-[#2E333E] redWhiteGradientBtn'
+      }}"
+      (click)="changeActiveTab('lotto60Originals')"
+      (keyup.enter)="changeActiveTab('lotto60Originals')"
+      (keyup.space)="changeActiveTab('lotto60Originals')"
+      role="tab"
+      [attr.aria-selected]="activeTab === 'lotto60Originals'"
+      tabindex="0"
+    >
+      <img
+        src="/assets/images/logos/60.svg"
+        alt="SpinWheelIcon"
+        class="h-[16px] md:h-[20px]"
+      />
+      <p class="">Lotto60 Originals</p>
+    </button>
+
+    <button
+      class="flex items-center  no-scale-on-hover  text-sm  md:text-base gap-2 px-4 cursor-pointer duration-300 ease-in-out py-2 rounded-[4px] {{
+        activeTab === 'allGames' ? 'bg-[#CE0000]' : 'bg-[#2E333E] redWhiteGradientBtn'
+      }}"
+      (click)="changeActiveTab('allGames')"
+      (keyup.enter)="changeActiveTab('allGames')"
+      (keyup.space)="changeActiveTab('allGames')"
+      role="tab"
+      [attr.aria-selected]="activeTab === 'allGames'"
+      tabindex="0"
+    >
+      <i class="fa-solid fa-cubes-stacked"></i>
+      <p class=" ">All Games</p>
+    </button>
+  </div>
+</div>
+
+<div class="rounded-lg overflow-hidden overflow-x-auto">
+  <div class="min-w-[800px]">
+    <div
+      class="w-full grid grid-cols-5 rounded-lg text-[#FFFFFF99] font-averta-semibold bg-[#1E2128] py-4 px-4"
+    >
+      <div class="text-sm font-averta-semibold">Game</div>
+      <div class="text-sm font-averta-semibold">Player</div>
+      <div class="text-sm font-averta-semibold">Bet Amount</div>
+      <div class="text-sm font-averta-semibold">Multiplier</div>
+      <div class="text-sm font-averta-semibold">Profit</div>
+    </div>
+
+    <div class="divide-y divide-[#2E333E]">
+      <div
+        *ngFor="let item of data; let i = index"
+        class="w-full grid grid-cols-5 text-white py-4 px-4 transition-colors"
+        [ngClass]="{
+          'bg-[#14171D]': i % 2 === 1,
+          'bg-transparent': i % 2 === 0
+        }"
+      >
+        <div class="flex items-center gap-2">
+          <ng-container
+            *ngIf="item.game === 'Lotto 60 Originals'; else otherGame"
+          >
+            <img [src]="item.icon" alt="game-icon" class="h-5 w-5" />
+          </ng-container>
+          <ng-template #otherGame>
+            <i [class]="item.icon " class="iconGradient w-1/12"></i>
+          </ng-template>
+          <span class="text-sm">{{ item.game }}</span>
+        </div>
+        <div class="text-sm">{{ item.player }}</div>
+        <div class="text-sm">${{ item.betAmount }}</div>
+        <div class="text-sm">{{ item.multiplier }}x</div>
+        <div class="text-sm text-[#4DA452]">+ ${{ item.profit }}</div>
+      </div>
+    </div>
+  </div>
+</div>

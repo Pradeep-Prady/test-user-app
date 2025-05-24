@@ -1,0 +1,46 @@
+<div class="flex   flex-col gap-2  {{ containerClass }}">
+  <label *ngIf="label" [for]="id" class="text-sm text-gray-300">{{
+    label
+  }}</label>
+
+  <div
+    [class]="
+      'relative rounded-[4px] flex items-center justify-between w-full px-4 py-3 bg-[#2B2E36] outline-none ' +
+      (isError
+        ? 'border-b-2 border-red-500 '
+        : isGradientBorder
+        ? 'gradient-border '
+        : '') +
+      (inputContainerClass || '')
+    "
+  >
+    <input
+      #datepicker
+      class="outline-none"
+      type="date"
+      [id]="id"
+      [(ngModel)]="value"
+      (blur)="onTouched()"
+      [placeholder]="placeholder"
+      [class]="inputClass ? ' ' + inputClass : ''"
+      [disabled]="disabled"
+      [min]="min"
+      onFocus="{showPicker()}"
+      [max]="max"
+      autocomplete="off"
+      (ngModelChange)="onChange($event)"
+      (change)="isError = false; errorMessage = ''"
+    />
+
+    <button
+      type="button"
+      class="absolute z-10 right-4 top-1/2 transform -translate-y-1/2 text-white"
+      (click)="openDatePicker()"
+    >
+      <i class="fa-solid fa-calendar"></i>
+    </button>
+  </div>
+  <div *ngIf="isError && errorMessage" class="text-red-500 text-sm">
+    {{ errorMessage }}
+  </div>
+</div>

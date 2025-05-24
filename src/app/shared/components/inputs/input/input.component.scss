@@ -1,0 +1,65 @@
+
+input {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 4px;
+    background-color: #2B2E36;
+    outline: none;
+    color: #ffffff;
+    border: none;
+  }
+  
+.gradient-border {
+    position: relative;
+    padding: 2px;
+    border-radius: 4px;
+    background: transparent;
+    
+    &:focus-within {
+      background: linear-gradient(90deg, rgba(255, 0, 0, 0.4), #D3A2A2);
+    }
+    
+    &:hover:not(:focus-within) {
+      background: linear-gradient(90deg, rgba(255, 0, 0, 0.4), #D3A2A2);
+    }
+    
+    &.error {
+      background: linear-gradient(90deg, rgba(255, 0, 0, 0.4), #D3A2A2);
+    }
+    
+    // input {
+    //   display: block;
+    //   width: 100%;
+    //   padding: 12px 16px;
+    //   border-radius: 8px;
+    //   background-color: #2B2E36;
+    //   outline: none;
+    //   color: #ffffff;
+    //   border: none;
+    // }
+  }
+  
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }

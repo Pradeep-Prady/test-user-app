@@ -1,0 +1,180 @@
+<div
+  *ngIf="currentPage === 'choose-method'"
+  class="w-full bg-[var(--bg-light-gray)] rounded-[4px] p-[10px] md:p-[20px] flex flex-col gap-[14px]"
+>
+  <div class="md:w-1/2 flex flex-col gap-5">
+    <app-select-input
+      [inputContainerClass]="'w-full bg-[var(--bg-dark-gray)]!'"
+      [options]="paymentOptions"
+      [hideBracket]="true"
+      [label]="'Deposit Currency'"
+      (ngModelChange)="onPaymentMethodChange($event)"
+      [(ngModel)]="activePaymentMethod"
+      [containerClass]="'w-full!'"
+      [isError]="paymentMethodsError !== ''"
+      [errorMessage]="paymentMethodsError"
+      [inputClass]="'w-full bg-[var(--bg-dark-gray)]! '"
+    >
+    </app-select-input>
+
+    <div *ngIf="activePaymentMethod !== ''" class="w-full flex flex-col gap-5">
+      <app-select-input
+        [inputContainerClass]="'w-full bg-[var(--bg-dark-gray)]!'"
+        [options]="networkOptions"
+        [label]="'Choose Network'"
+        [hideBracket]="true"
+        [(ngModel)]="activeNetwork"
+        [containerClass]="'w-full!'"
+        [isError]="networkError !== ''"
+        [errorMessage]="networkError"
+        [inputClass]="'w-full bg-[var(--bg-dark-gray)]! '"
+      >
+      </app-select-input>
+
+      <div class="flex flex-col gap-1">
+        <app-text-input
+          [icon]="paymentOptions.label"
+          [placeholder]="'Enter Amount '"
+          label="Enter Amount"
+          [isError]="amoutError !== ''"
+          [(ngModel)]="amount"
+          [errorMessage]="amoutError"
+          [inputContainerClass]="' bg-[var(--bg-dark-gray)]! '"
+          [inputClass]="' bg-[var(--bg-dark-gray)]! '"
+        ></app-text-input>
+
+        <p class="text-[#FFFFFFCC]">You Get ~US$ 235450.76</p>
+      </div>
+
+      <div class="w-full bg-[#4DA45233] flex p-2 rounded-[4px] text-sm">
+        <div class="w-1/12 flex items-start justify-center p-1">
+          <i class="fa-solid text-[20px] fa-circle-info text-[#4DA452]"></i>
+        </div>
+        <p class="w-11/12">
+          Send only USDT to this deposit address. Coins will be deposited
+          automatically after network confirmations. Minimum Deposit: 0.000001
+          USDT.
+        </p>
+      </div>
+
+      <div
+        (click)="deposit()"
+        class="bg-[var(--red)] p-[10px] text-center cursor-pointer rounded-[4px]"
+      >
+        <p>Deposit</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="currentPage === 'crypto-pay'"
+  class="bg-[var(--bg-light-gray)] rounded-[4px] p-[20px] flex flex-col items-center justify-center gap-[14px]"
+>
+  <div class="w-1/2 flex flex-col items-center justify-center gap-[24px]">
+    <div class="flex flex-col items-center">
+      <h2 class="text-[20px] font-semibold">
+        {{ numericAmount | localeCurrency }}
+      </h2>
+      <p class="text-[#FFFFFFCC]">You Deposit</p>
+    </div>
+
+    <div>
+      <p>Open your wallet to scan the QR & make the payment</p>
+    </div>
+
+    <div class="w-full flex flex-col gap-[10px]">
+      <div class="w-full bg-[var(--bg-dark-gray)] p-[10px] rounded-[4px]">
+        <p>0x9f1a4f149497106fD0813EB380B4B96368fbC078</p>
+      </div>
+      <div
+        class="redWhiteGradientBtNormal w-full text-center p-[10px] cursor-pointer"
+      >
+        <p>Copy Address</p>
+      </div>
+    </div>
+
+    <div class="w-full bg-[#A88F3333] flex p-2 rounded-[4px] text-sm">
+      <div class="w-1/12 flex items-start justify-center p-1">
+        <i class="fa-solid text-[20px] fa-circle-info text-[#A88F33]"></i>
+      </div>
+      <p class="w-11/12">
+        Do not refresh or click any buttons until the transaction is fully
+        completed. Once the transaction is successful, kindly click the
+        'Continue' button to proceed.
+      </p>
+    </div>
+
+    <div
+      (click)="isStatusPage = true"
+      class="w-full bg-[var(--red)] p-[10px] text-center cursor-pointer rounded-[4px]"
+    >
+      <p>Continue</p>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="isStatusPage"
+  class="modelOverlay bg-opacity-30 flex items-center justify-center z-50"
+>
+  <div class="modelOverlay" (click)="isStatusPage = false"></div>
+
+  <div
+    class="relative bg-[#191C23] rounded-[6px] overflow-hidden w-full h-auto md:max-w-md mx-4 z-10"
+    [ngClass]="{ 'open-modal-transition ': isStatusPage }"
+  >
+    <div class="text-white p-5 flex flex-col gap-[20px]">
+      <div class="flex justify-between items-center">
+        <h2 class="text-sm font-averta-semibold">Transaction Details</h2>
+
+        <div
+          class="cursor-pointer flex items-center justify-center group border-2 border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+          (click)="isStatusPage = false"
+          (keydown.enter)="isStatusPage = false"
+          tabindex="0"
+          role="button"
+          aria-label="Close modal"
+        >
+          <i
+            class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+          ></i>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <div>
+          <p>100 BRL</p>
+          <p class="text-[#FFFFFF99] text-sm">11-05-2025 | 11:02:40</p>
+        </div>
+        <p class="bg-[var(--pending)] px-3 py-1 rounded-full">Pending</p>
+      </div>
+
+      <div class="">
+        <div class="flex justify-between items-center">
+          <p class="text-[#FFFFFFB2]">Type</p>
+          <p>Deposit</p>
+        </div>
+        <div class="flex justify-between items-center">
+          <p class="text-[#FFFFFFB2]">Method</p>
+          <p>Fiat</p>
+        </div>
+      </div>
+
+      <div
+        class="flex bg-[var(--bg-light-gray)] p-[10px] rounded-[4px] justify-between items-center"
+      >
+        <div>
+          <p class="text-sm text-[#FFFFFFCC]">Transaction ID</p>
+          <p>F-1790216986065903642</p>
+        </div>
+        <div>
+          <p
+            class="redWhiteGradientBtNormal -full px-3 py-1 rounded-full cursor-pointer"
+          >
+            Copy
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

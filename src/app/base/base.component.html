@@ -1,0 +1,47 @@
+<div class="bg-[#0E1015] h-screen w-screen flex justify-center scrollbar-hide">
+  <div class="w-full xl:max-w-[1600px] flex flex-row">
+    <div
+      class="hidden lg:block {{
+        isSideBarFolded ? 'lg:w-[80px]' : 'lg:w-[18%]'
+      }}  lg:h-full lg:relative overflow-y-auto scrollbar-hide transition-all duration-300"
+    >
+      <app-drawer
+        [showFoldSideBar]="true"
+        [showLanguageSelector]="showLanguageSelector"
+        (foldSideBar)="isSideBarFolded = $event"
+      ></app-drawer>
+    </div>
+    <!-- main -->
+    <div
+      class="w-full {{
+        isSideBarFolded ? 'lg:w-full [82%] full' : 'lg:w-[82%]'
+      }} flex flex-col overflow-y-auto scrollbar-hide"
+    >
+      <div class="md:sticky h-auto md:h-16 md:top-0 w-full z-20">
+        <app-header
+          (openLanguageModel)="showLanguageSelector = true"
+        ></app-header>
+      </div>
+      <div class="p-0 md:px-4 lg:p-0 text-white">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="mb-[80px] lg:mb-0">
+        <app-footer
+          (openLanguageModel)="showLanguageSelector = true"
+        ></app-footer>
+      </div>
+      <!-- <app-mobile-nav 
+          (openLanguageModel)="showLanguageSelector = true"
+      ></app-mobile-nav> -->
+    </div>
+  </div>
+</div>
+
+<!-- This should be OUTSIDE the scrollable main content -->
+<div
+  class="fixed bottom-0 w-full lg:hidden z-10 h-[80px] bg-[#0E1015] transition-all duration-300"
+>
+  <app-mobile-nav
+    (openLanguageModel)="showLanguageSelector = true"
+  ></app-mobile-nav>
+</div>

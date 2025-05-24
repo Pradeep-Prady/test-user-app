@@ -1,0 +1,50 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div *ngIf="!isLoading">
+  <div class="w-full">
+    <div
+      
+      class="w-full flex flex-col gap-[20px]"
+    >
+      <div class=" w-full flex flex-col gap-[14px]">
+        <div class="flex md:hidden items-center gap-2">
+          <a routerLink="/bank" class="flex">
+            <i
+              class="fa-solid cursor-pointer fa-chevron-left bg-[#2B2E36] px-3 py-2 text-[14px] rounded-[2px]"
+            ></i>
+          </a>
+          <h2>Deposit</h2>
+        </div>
+
+        <div
+          class="w-full bg-[var(--bg-light-gray)] p-[10px] rounded-[4px] grid grid-cols-2 gap-[10px] md:gap-[20px]"
+        >
+          <div
+            (click)="activeTab = 'fiat'"
+            class="{{
+              activeTab === 'fiat' ? 'bg-[var(--bg-dark-gray)]' : ''
+            }}   p-[10px] text-center cursor-pointer rounded-[4px]"
+          >
+            <p class="font-medium">Fiat</p>
+          </div>
+          <div
+            (click)="activeTab = 'crypto'"
+            class="{{
+              activeTab === 'crypto' ? 'bg-[var(--bg-dark-gray)]' : ''
+            }} p-[10px] text-center cursor-pointer rounded-[4px]"
+          >
+            <p class="font-medium">Crypto</p>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeTab === 'fiat'">
+        <app-fiat></app-fiat>
+      </div>
+
+      <div class="w-full" *ngIf="activeTab === 'crypto'">
+        <app-crypto></app-crypto>
+      </div>
+    </div>
+  </div>
+</div>

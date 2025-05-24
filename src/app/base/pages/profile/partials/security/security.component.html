@@ -1,0 +1,291 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div *ngIf="!isLoading">
+  <div class="w-full flex flex-col gap-3">
+    <div class="flex items-center gap-2">
+      <a routerLink="/profile" class="flex md:hidden">
+        <i
+          class="fa-solid cursor-pointer fa-chevron-left bg-[#2B2E36] px-3 py-2 text-[14px] rounded-[2px]"
+        ></i>
+      </a>
+      <h2>Security</h2>
+    </div>
+
+    <app-manage-tfa></app-manage-tfa>
+
+    <div
+      class="w-full bg-[#2B2E36] p-3 md:p-5 rounded-[4px] flex items-end justify-between gap-3"
+    >
+      <div class="w-8/12 md:w-7/12 flex flex-col gap-3">
+        <img
+          src="/assets/images/common/redKey.svg"
+          alt="security"
+          class="w-[25px] md:w-[40px] h-[25px] md:h-[40px]"
+        />
+
+        <h2>Change Password</h2>
+
+        <p class="text-[#FFFFFFCC] text-sm">
+          In order to protect your account safety, we will disable your
+          withdrawals for 24 hours after you change your password
+        </p>
+      </div>
+
+      <div class="">
+        <button
+          (click)="changePasswordModel = true"
+          class="btn no-scale-on-hover w-[90px] md:w-[134px]!"
+        >
+          Change
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Change Password -->
+<div
+  *ngIf="changePasswordModel"
+  class="modelOverlay bg-opacity-30 flex items-center justify-center z-50"
+>
+  <div class="modelOverlay" (click)="closeModel()"></div>
+
+  <div
+    class="relative bg-[#0E1015] rounded-[6px] overflow-hidden w-full h-auto md:max-w-md mx-4 z-10"
+    [ngClass]="{ 'open-modal-transition ': changePasswordModel }"
+  >
+    <div
+      *ngIf="currentPage === 'check-old-password'"
+      class="text-white p-3 md:p-5"
+    >
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-7">
+          <div class="flex justify-between items-center">
+            <h2 class="font-averta-medium">Change Password</h2>
+
+            <div
+              class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+              (click)="closeModel()"
+              (keydown.enter)="closeModel()"
+              tabindex="0"
+              role="button"
+              aria-label="Close modal"
+            >
+              <i
+                class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-sm text-[#FFFFFF99]">
+            For your safety, we need to verify your current password first
+          </p>
+        </div>
+
+        <form
+          (ngSubmit)="checkCurrentPassword()"
+          class="my-5 flex flex-col gap-5"
+        >
+          <app-password-input
+            label="Current Password"
+            placeholder="Current Password"
+            [(ngModel)]="currentPassword"
+            name="currentPassword"
+          >
+          </app-password-input>
+
+          <button
+            [disabled]="currentPassword.length < 8"
+            [ngClass]="{
+              'bg-[#CE000080] text-gray-300': currentPassword.length < 8,
+              'bg-[#CE0000]': currentPassword.length >= 8
+            }"
+            class="w-full text-center py-[10px] cursor-pointer rounded-[4px]"
+            type="submit"
+          >
+            Confirm
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="currentPage === 'tfa-enabled'" class="text-white p-3 md:p-5">
+      <div class="flex flex-col gap-[20px]">
+        <div class="flex flex-col gap-7">
+          <div class="flex justify-between items-center">
+            <h2 class="font-averta-medium">Change Password</h2>
+            <div
+              class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+              (click)="closeModel()"
+              (keydown.enter)="closeModel()"
+              tabindex="0"
+              role="button"
+              aria-label="Close modal"
+            >
+              <i
+                class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-sm text-[#FFFFFF99]">
+            Re-login will be required after changing the password.
+          </p>
+        </div>
+
+        <form (ngSubmit)="confirmTFA()" class="flex flex-col gap-[20px]">
+          <div class="w-full flex flex-col gap-[12px] items-center">
+            <p class="ml-1">Enter 6-digit verification code</p>
+            <div class="flex items-start" #otpWrapper>
+              <app-otp-input
+                (otpChange)="handleOtpChange($event)"
+              ></app-otp-input>
+            </div>
+          </div>
+
+          <button
+            [disabled]="otpValue.length < 6"
+            [ngClass]="{
+              'bg-[#CE000080] text-gray-300': otpValue.length < 6,
+              'bg-[#CE0000]': otpValue.length >= 6
+            }"
+            class="w-full text-center py-[10px] cursor-pointer rounded-[4px]"
+            type="submit"
+          >
+            Change Password
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div
+      *ngIf="currentPage === 'change-password'"
+      class="text-white p-3 md:p-5"
+    >
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-7">
+          <div class="flex justify-between items-center">
+            <h2 class="font-averta-medium">Change Password</h2>
+            <div
+              class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+              (click)="closeModel()"
+              (keydown.enter)="closeModel()"
+              tabindex="0"
+              role="button"
+              aria-label="Close modal"
+            >
+              <i
+                class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-sm text-[#FFFFFF99]">
+            Re-login will be required after changing the password.
+          </p>
+        </div>
+
+        <form (ngSubmit)="change()" class="my-5 flex flex-col gap-5">
+          <app-password-input
+            label="New Password"
+            placeholder="New Password"
+            [(ngModel)]="newPassword"
+            name="newPassword"
+            [isError]="newPasswordError !== ''"
+            [errorMessage]="newPasswordError"
+          >
+          </app-password-input>
+
+          <app-password-input
+            label="Confirm Password"
+            placeholder="Confirm Password"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            [isError]="confirmPasswordError !== ''"
+            [errorMessage]="confirmPasswordError"
+          >
+          </app-password-input>
+
+          <button
+            class="w-full bg-[#CE0000] text-center py-[10px] cursor-pointer rounded-[4px]"
+            type="submit"
+          >
+            Confirm
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="changePasswordSuccess"
+  class="modelOverlay bg-opacity-30 flex items-center justify-center z-50"
+>
+  <div class="modelOverlay" (click)="changePasswordSuccess = false"></div>
+
+  <div
+    class="relative text-white bg-[#191C23] rounded-[6px] overflow-hidden p-5 w-full h-auto max-w-lg mx-4"
+    [ngClass]="{ 'open-modal-transition ': changePasswordSuccess }"
+  >
+    <div>
+      <div class="flex justify-between items-center">
+        <img
+          class="h-[35px]"
+          src="/assets/images/logos/lotto60.svg"
+          alt="logo"
+        />
+        <div>
+          <a
+            class="cursor-pointer group border-2 border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+            routerLink="/"
+            tabindex="0"
+            role="button"
+            aria-label="Close modal"
+          >
+            <i
+              class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+            ></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-5 flex flex-col gap-3">
+        <div class="w-full flex items-start justify-start">
+          <img
+            src="/assets/images/common/lockGreen.svg"
+            alt="logo"
+            class="h-[40px]"
+          />
+        </div>
+
+        <h2 class="text-xl font-averta-semibold">
+          Password changed successfully
+        </h2>
+
+        <div class="text-sm text-[#FFFFFF99]">
+          <p>
+            Please log in with your updated password to access your Lotto60
+            account.
+          </p>
+        </div>
+
+        <div class="w-full flex items-center justify-center">
+          <p
+            class="w-full bg-[#CE0000] text-center py-[10px] cursor-pointer rounded-[4px]"
+            (click)="backtoHome()"
+            type="submit"
+          >
+            Back to Home
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

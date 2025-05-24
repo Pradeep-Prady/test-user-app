@@ -1,0 +1,50 @@
+.rightGradient {
+  background: linear-gradient(180deg, #ce0000 0%, #525e7b 100%);
+}
+
+.tfa-input {
+  width: 48px;
+  height: 48px;
+  text-align: center;
+  font-size: 2rem;
+  border-radius: 8px;
+  border: 1px solid #2b2e36;
+  background: #2b2e36;
+  color: #fff;
+  outline: none;
+  transition: border 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+.tfa-input:focus {
+  outline: none;
+}
+
+.tfa-input-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tfa-input-container::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #982929 0%, #d3a2a2 100%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tfa-input-container:focus-within::before,
+.tfa-input-container:hover::before {
+  opacity: 1;
+}
+
+.no-scale-on-hover:hover {
+  transform: none !important;
+}
+.no-scale-on-hover:active {
+  transform: none !important;
+}

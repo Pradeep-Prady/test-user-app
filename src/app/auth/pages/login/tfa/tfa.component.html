@@ -1,0 +1,64 @@
+ 
+
+<!-- TFA template with direct reference to ng-otp-input -->
+<div
+  class="relative tfa text-white bg-[#191C23] rounded-[6px] overflow-hidden p-5 w-[95%] h-full md:h-auto md:w-auto max-w-3xl mx-4 z-10"
+>
+  <div class="flex justify-between items-center">
+    <img class="h-[35px]" src="/assets/images/logos/lotto60.svg" alt="logo" />
+    <div>
+      <div
+        class="cursor-pointer group border-2 flex items-center justify-center border-[#2B2E36] px-2 py-1 rounded-md bg-[#2B2E3666]"
+        (click)="close()"
+        (keydown.enter)="close()"
+        tabindex="0"
+        role="button"
+        aria-label="Close modal"
+      >
+        <i
+          class="fas fa-times text-xl text-[#FFFFFF99] group-hover:text-white"
+        ></i>
+      </div>
+    </div>
+  </div>
+  <div class="w-full grid md:grid-cols-2">
+    <div class="mt-5 flex flex-col gap-3">
+      <div class="w-full flex items-start justify-start">
+        <img
+          src="/assets/images/common/redShield.svg"
+          alt="logo"
+          class="h-[40px]"
+        />
+      </div>
+
+      <h2 class="text-xl font-averta-semibold">
+        Enter 6-digit Verification Code
+      </h2>
+
+      <div class="text-sm text-[#FFFFFF99]">
+        <p>Please enter the verification code from your Google</p>
+        <p>Authenticator app to proceed with login.</p>
+      </div>
+    </div>
+    <form class="my-3 flex flex-col gap-5" (ngSubmit)="submitCode()">
+      <div>
+        <p class="mb-2 ml-1">Enter 6-digit verification code</p>
+        <div class="flex items-center my-4" #otpWrapper>
+          <!-- Add #ngOtpInput to get a direct reference to the component -->
+          <ng-otp-input
+            #ngOtpInput
+            [config]="otpConfig"
+            (onInputChange)="onOtpChange($event)"
+          ></ng-otp-input>
+        </div>
+      </div>
+      <button
+        class="bg-[#CE0000] text-center py-[10px] cursor-pointer rounded-[4px]"
+        type="submit"
+        [disabled]="!validateForm()"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
