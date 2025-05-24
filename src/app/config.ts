@@ -3,7 +3,7 @@ const live = 'https://dev-api.lotto60.com/';
 export class ConfigService {
   //domian url
 
-  public Domain = live;
+  public Domain = local;
 
   //base
 
