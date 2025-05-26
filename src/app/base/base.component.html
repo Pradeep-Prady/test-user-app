@@ -47,17 +47,18 @@
   ></app-mobile-nav>
 </div> -->
 
-
 <!-- <div class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 app-mobile-nav">
   <app-mobile-nav
     (openLanguageModel)="showLanguageSelector = true"
   ></app-mobile-nav>
 </div> -->
- 
-<!-- MAIN LAYOUT WRAPPER -->
-<div  style="height: calc(var(--vh) * 100);" class="bg-[#0E1015] w-screen flex justify-center scrollbar-hide">
-  <div class="w-full xl:max-w-[1600px] flex flex-row">
 
+<!-- MAIN LAYOUT WRAPPER -->
+<div
+  style="height: calc(var(--vh) * 100)"
+  class="bg-[#0E1015] w-screen flex justify-center scrollbar-hide"
+>
+  <div class="w-full xl:max-w-[1600px] flex flex-row">
     <!-- SIDEBAR -->
     <div
       class="hidden lg:block transition-all duration-300 overflow-y-auto scrollbar-hide relative"
@@ -72,26 +73,19 @@
 
     <!-- MAIN CONTENT -->
     <div
-    class="flex flex-col w-full overflow-y-auto scrollbar-hide"
-    [ngClass]="isSideBarFolded ? 'lg:w-[calc(100%-80px)]' : 'lg:w-[82%]'"
-  >
-    <!-- HEADER -->
-    <div class="md:sticky h-auto md:h-16 md:top-0 w-full z-20">
-      <app-header
-        (openLanguageModel)="showLanguageSelector = true"
-      ></app-header>
-    </div>
+      class="flex flex-col w-full overflow-y-auto scrollbar-hide"
+      [ngClass]="isSideBarFolded ? 'lg:w-[calc(100%-80px)]' : 'lg:w-[82%]'"
+    >
+      <!-- HEADER -->
+      <div class="md:sticky h-auto md:h-16 md:top-0 w-full z-20">
+        <app-header
+          (openLanguageModel)="showLanguageSelector = true"
+        ></app-header>
+      </div>
       <!-- MAIN PAGE CONTENT -->
-      <div class="p-4 text-white pb-[100px]">
-        <h1 class="text-2xl font-bold mb-4">Welcome to the Dashboard</h1>
-        <p class="mb-8">
-          This is some sample scrollable content. Scroll down to see the mobile nav stay fixed at the bottom on small devices.
-        </p>
-        <div class="space-y-4">
-          <div class="h-[300px] bg-gray-800 rounded-lg p-4">Content Block 1</div>
-          <div class="h-[300px] bg-gray-700 rounded-lg p-4">Content Block 2</div>
-          <div class="h-[300px] bg-gray-600 rounded-lg p-4">Content Block 3</div>
-        </div>
+
+      <div class="p-0 md:px-4 lg:p-0 text-white pb-[100px]">
+        <router-outlet></router-outlet>
       </div>
 
       <!-- FOOTER FOR DESKTOP -->
@@ -105,18 +99,10 @@
 </div>
 
 <!-- FIXED MOBILE BOTTOM NAV -->
-<div class="fixed bottom-0 w-full lg:hidden z-50 h-[80px] bg-[#0E1015] border-t border-gray-700 flex justify-around items-center">
-  <!-- Replace these with real menu items -->
-  <button class="text-white text-sm flex flex-col items-center">
-    <span class="material-icons">home</span>
-    <span>Home</span>
-  </button>
-  <button class="text-white text-sm flex flex-col items-center">
-    <span class="material-icons">account_circle</span>
-    <span>Profile</span>
-  </button>
-  <button class="text-white text-sm flex flex-col items-center">
-    <span class="material-icons">settings</span>
-    <span>Settings</span>
-  </button>
+<div
+  class="fixed bottom-0 w-full lg:hidden z-50 h-[80px] bg-[#0E1015] border-t border-gray-700 flex justify-around items-center"
+>
+  <app-mobile-nav
+    (openLanguageModel)="showLanguageSelector = true"
+  ></app-mobile-nav>
 </div>
