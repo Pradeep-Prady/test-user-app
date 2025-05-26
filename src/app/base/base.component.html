@@ -73,18 +73,17 @@
 
     <!-- MAIN CONTENT -->
     <div
-      class="flex flex-col w-full overflow-y-auto scrollbar-hide"
-      [ngClass]="isSideBarFolded ? 'lg:w-[calc(100%-80px)]' : 'lg:w-[82%]'"
-    >
-      <!-- HEADER -->
-      <div class="md:sticky h-auto md:h-16 md:top-0 w-full z-20">
-        <app-header
-          (openLanguageModel)="showLanguageSelector = true"
-        ></app-header>
-      </div>
-
+    class="flex flex-col w-full overflow-y-auto scrollbar-hide"
+    [ngClass]="isSideBarFolded ? 'lg:w-[calc(100%-80px)]' : 'lg:w-[82%]'"
+  >
+    <!-- HEADER -->
+    <div class="md:sticky h-auto md:h-16 md:top-0 w-full z-20">
+      <app-header
+        (openLanguageModel)="showLanguageSelector = true"
+      ></app-header>
+    </div>
       <!-- MAIN PAGE CONTENT -->
-      <div class="p-4 text-white">
+      <div class="p-4 text-white pb-[100px]">
         <h1 class="text-2xl font-bold mb-4">Welcome to the Dashboard</h1>
         <p class="mb-8">
           This is some sample scrollable content. Scroll down to see the mobile nav stay fixed at the bottom on small devices.
