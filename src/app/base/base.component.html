@@ -35,6 +35,9 @@
       ></app-mobile-nav> -->
     </div>
   </div>
+  <app-mobile-nav
+  (openLanguageModel)="showLanguageSelector = true"
+></app-mobile-nav>
 </div>
 
 <!-- This should be OUTSIDE the scrollable main content -->
@@ -47,8 +50,8 @@
 </div> -->
 
 
-<div class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 app-mobile-nav">
+<!-- <div class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 app-mobile-nav">
   <app-mobile-nav
     (openLanguageModel)="showLanguageSelector = true"
   ></app-mobile-nav>
-</div>
+</div> -->
