@@ -50,5 +50,19 @@
       src="https://kit.fontawesome.com/8663c0f125.js"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      function setRealVH() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }
+    
+      // Set on load
+      setRealVH();
+    
+      // Update on resize or orientation change
+      window.addEventListener('resize', setRealVH);
+    </script>
+    
   </body>
 </html>
